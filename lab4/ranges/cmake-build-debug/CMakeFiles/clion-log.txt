@@ -1,0 +1,1 @@
+CMakeLists.txt not found in E:\Documents\cpp_projects\polsl-aei-cp4-ang\2d98c560-gr12-repo\lab4\ranges Select CMakeLists.txt
