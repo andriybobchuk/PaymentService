@@ -36,15 +36,6 @@ bool square(int a) { return a * a; }
 
 int main() {
 
-
-    auto to_int = [](auto word) {
-        std::string w;
-        for (auto c : word)
-            w += c;
-        return std::stoi(w);
-    };
-
-
     /* TASK 1 */
 #if 1 // Using ranges create a vector with only prime numbers from another vector (i.e. [1,2,3,4,5,6,7,8]  -> [2,3,5,7])
     std::vector<int> initialVector = { 1,2,3,4,5,6,7,8 };
