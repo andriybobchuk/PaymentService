@@ -17,7 +17,7 @@
     <Filter Include="libraries">
       <UniqueIdentifier>{6fde11c7-6fb8-4745-9ca2-31ee44a4a964}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files">
+    <Filter Include="view">
       <UniqueIdentifier>{4473cfea-270d-49c0-ae74-9f8e913718dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -50,10 +50,13 @@
       <Filter>Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="ClientForm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>view</Filter>
     </ClCompile>
     <ClCompile Include="MainForm.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>view</Filter>
+    </ClCompile>
+    <ClCompile Include="database.cpp">
+      <Filter>controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -92,6 +95,9 @@
     </ClInclude>
     <ClInclude Include="json.hpp">
       <Filter>libraries</Filter>
+    </ClInclude>
+    <ClInclude Include="database.h">
+      <Filter>controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

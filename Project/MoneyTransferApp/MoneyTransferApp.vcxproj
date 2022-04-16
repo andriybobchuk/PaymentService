@@ -132,6 +132,7 @@
     <ClCompile Include="ClientForm.cpp" />
     <ClCompile Include="controller.cpp" />
     <ClCompile Include="CreditAccount.cpp" />
+    <ClCompile Include="database.cpp" />
     <ClCompile Include="DebitAccount.cpp" />
     <ClCompile Include="MainForm.cpp" />
     <ClCompile Include="PaymentService.cpp" />
@@ -147,6 +148,7 @@
     </ClInclude>
     <ClInclude Include="controller.h" />
     <ClInclude Include="CreditAccount.h" />
+    <ClInclude Include="database.h" />
     <ClInclude Include="DebitAccount.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="MainForm.h">

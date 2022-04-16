@@ -1,13 +1,12 @@
 #include "Staff.h"
 
-Staff::Staff(int id, std::string username, std::string password, std::string email, std::string position) : BaseUser(id, username, password, email) {
+Staff::Staff(std::string username, std::string password, std::string email, std::string position) : BaseUser(username, password, email) {
     mPosition = position;
 }
 
 std::ostream& operator<<(std::ostream& os, Staff& staff) {
     os
-        << "{\"id\":" << staff.getId()
-        << ",\"username\":\"" << staff.getUsername()
+        << "{\"username\":\"" << staff.getUsername()
         << "\",\"email\":\"" << staff.getEmail()
         << "\",\"password\":\"" << staff.getPassword()
         << "\",\"position\":\"" << staff.getPosition()

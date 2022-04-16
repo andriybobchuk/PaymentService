@@ -1,11 +1,11 @@
 #include "Client.h"
 
-Client::Client(int id, std::string username, std::string password, std::string email) : BaseUser(id, username, password, email) {
+Client::Client(std::string username, std::string password, std::string email) : BaseUser(username, password, email) {
 
 }
 
-Client::Client(int id, std::string username, std::string password, std::string email, std::vector<int> debitAccounts,
-    std::vector<int> creditAccounts) : BaseUser(id, username, password, email) {
+Client::Client(std::string username, std::string password, std::string email, std::vector<int> debitAccounts,
+    std::vector<int> creditAccounts) : BaseUser(username, password, email) {
 
     for (auto element : debitAccounts)
         mDebitAccounts.push_back(element);
@@ -31,8 +31,7 @@ void Client::setCreditAccounts(const std::vector<int>& mCreditAccounts) {
 
 std::ostream& operator<<(std::ostream& os, Client& client) {
     os
-        << "{\"id\":" << client.getId()
-        << ",\"username\":\"" << client.getUsername()
+        << "{\"username\":\"" << client.getUsername()
         << "\",\"email\":\"" << client.getEmail()
         << "\",\"password\":\"" << client.getPassword()
         << "\",\"debitAccounts\":[";

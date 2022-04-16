@@ -1,18 +1,9 @@
 #include "BaseUser.h"
 
-BaseUser::BaseUser(int id, std::string username, std::string password, std::string email) {
-    mId = id;
+BaseUser::BaseUser(std::string username, std::string password, std::string email) {
     mUsername = username;
     mPassword = password;
     mEmail = email;
-}
-
-int BaseUser::getId() {
-    return mId;
-}
-
-void BaseUser::setId(int mId) {
-    BaseUser::mId = mId;
 }
 
 const std::string& BaseUser::getUsername() {

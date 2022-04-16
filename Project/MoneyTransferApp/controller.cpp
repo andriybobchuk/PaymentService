@@ -4,22 +4,22 @@
 
 #include "controller.h"
 
-void signUp(int id, std::string username, std::string password, std::string email) {
+void signUp(std::string username, std::string password, std::string email) {
     if (
         isPasswordSecure(password)
         && isEmailValid(email)
         && isLoginUnique(username, email)
         )
-        paymentService->addClient(Client(id, username, password, email));
+        paymentService->addClient(Client(username, password, email));
 }
 
-void signUp(int id, std::string username, std::string password, std::string email, std::string position) {
+void signUp(std::string username, std::string password, std::string email, std::string position) {
     if (
         isPasswordSecure(password)
         && isEmailValid(email)
         && isLoginUnique(username, email)
         )
-        paymentService->addStaff(Staff(id, username, password, email, position));
+        paymentService->addStaff(Staff(username, password, email, position));
 }
 
 void signInClient(std::string login, std::string password) {

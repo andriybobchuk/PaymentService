@@ -12,14 +12,12 @@ class Client : public BaseUser {
 public:
 
 	Client(
-		int id,
 		std::string username,
 		std::string password,
 		std::string email
 	);
 
 	Client(
-		int id,
 		std::string username,
 		std::string password,
 		std::string email,

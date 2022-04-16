@@ -11,7 +11,6 @@ public:
 	void setPosition(const std::string& mPosition);
 
 	Staff(
-		int id,
 		std::string username,
 		std::string password,
 		std::string email,

@@ -5,15 +5,11 @@
 
 class BaseUser {
 
-    int mId;
     std::string mUsername;
     std::string mPassword;
     std::string mEmail;
 
 public:
-    int getId();
-
-    void setId(int mId);
 
     const std::string& getUsername();
 
@@ -27,7 +23,7 @@ public:
 
     void setEmail(const std::string& mEmail);
 
-    BaseUser(int id, std::string username, std::string password, std::string email);
+    BaseUser(std::string username, std::string password, std::string email);
 
 
 
