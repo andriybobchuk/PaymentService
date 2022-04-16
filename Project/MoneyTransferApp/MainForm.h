@@ -37,16 +37,24 @@ namespace MoneyTransferApp {
 	private: System::Windows::Forms::Panel^ panel1;
 	private: System::Windows::Forms::Label^ label2;
 	private: System::Windows::Forms::Label^ label1;
-	private: System::Windows::Forms::TextBox^ textBox1;
-	private: System::Windows::Forms::Button^ button1;
-	private: System::Windows::Forms::TextBox^ textBox2;
+	private: System::Windows::Forms::TextBox^ tbEmail;
+
+	private: System::Windows::Forms::Button^ btnSignIn;
+	private: System::Windows::Forms::TextBox^ tbPassword;
+
+
 	private: System::Windows::Forms::Panel^ panel2;
-	private: System::Windows::Forms::Button^ button2;
-	private: System::Windows::Forms::TextBox^ textBox3;
-	private: System::Windows::Forms::TextBox^ textBox4;
-	private: System::Windows::Forms::Label^ label3;
+	private: System::Windows::Forms::Button^ btnSignUp;
+	private: System::Windows::Forms::TextBox^ tbPassword1;
+
+
+	private: System::Windows::Forms::TextBox^ tbEmail1;
+	private: System::Windows::Forms::Label^ lInfo;
+
+
 	private: System::Windows::Forms::Label^ label4;
-	private: System::Windows::Forms::TextBox^ textBox5;
+	private: System::Windows::Forms::TextBox^ tbName;
+
 	protected:
 
 
@@ -67,18 +75,18 @@ namespace MoneyTransferApp {
 		void InitializeComponent(void)
 		{
 			this->panel1 = (gcnew System::Windows::Forms::Panel());
-			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->btnSignIn = (gcnew System::Windows::Forms::Button());
+			this->tbPassword = (gcnew System::Windows::Forms::TextBox());
+			this->tbEmail = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
-			this->button1 = (gcnew System::Windows::Forms::Button());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->panel2 = (gcnew System::Windows::Forms::Panel());
-			this->button2 = (gcnew System::Windows::Forms::Button());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->textBox4 = (gcnew System::Windows::Forms::TextBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
+			this->tbName = (gcnew System::Windows::Forms::TextBox());
+			this->btnSignUp = (gcnew System::Windows::Forms::Button());
+			this->tbPassword1 = (gcnew System::Windows::Forms::TextBox());
+			this->tbEmail1 = (gcnew System::Windows::Forms::TextBox());
+			this->lInfo = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
-			this->textBox5 = (gcnew System::Windows::Forms::TextBox());
 			this->panel1->SuspendLayout();
 			this->panel2->SuspendLayout();
 			this->SuspendLayout();
@@ -86,9 +94,9 @@ namespace MoneyTransferApp {
 			// panel1
 			// 
 			this->panel1->BackColor = System::Drawing::Color::White;
-			this->panel1->Controls->Add(this->button1);
-			this->panel1->Controls->Add(this->textBox2);
-			this->panel1->Controls->Add(this->textBox1);
+			this->panel1->Controls->Add(this->btnSignIn);
+			this->panel1->Controls->Add(this->tbPassword);
+			this->panel1->Controls->Add(this->tbEmail);
 			this->panel1->Controls->Add(this->label2);
 			this->panel1->Controls->Add(this->label1);
 			this->panel1->Location = System::Drawing::Point(191, 102);
@@ -96,15 +104,33 @@ namespace MoneyTransferApp {
 			this->panel1->Size = System::Drawing::Size(296, 329);
 			this->panel1->TabIndex = 0;
 			// 
-			// label1
+			// btnSignIn
 			// 
-			this->label1->AutoSize = true;
-			this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13, System::Drawing::FontStyle::Bold));
-			this->label1->Location = System::Drawing::Point(46, 39);
-			this->label1->Name = L"label1";
-			this->label1->Size = System::Drawing::Size(84, 30);
-			this->label1->TabIndex = 0;
-			this->label1->Text = L"Sign In";
+			this->btnSignIn->BackColor = System::Drawing::Color::Black;
+			this->btnSignIn->Font = (gcnew System::Drawing::Font(L"Segoe UI", 8.25F, System::Drawing::FontStyle::Bold));
+			this->btnSignIn->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->btnSignIn->Location = System::Drawing::Point(51, 219);
+			this->btnSignIn->Name = L"btnSignIn";
+			this->btnSignIn->Size = System::Drawing::Size(194, 30);
+			this->btnSignIn->TabIndex = 4;
+			this->btnSignIn->Text = L"Sign in";
+			this->btnSignIn->UseVisualStyleBackColor = false;
+			// 
+			// tbPassword
+			// 
+			this->tbPassword->Location = System::Drawing::Point(51, 175);
+			this->tbPassword->Name = L"tbPassword";
+			this->tbPassword->Size = System::Drawing::Size(194, 22);
+			this->tbPassword->TabIndex = 3;
+			this->tbPassword->Text = L"Password";
+			// 
+			// tbEmail
+			// 
+			this->tbEmail->Location = System::Drawing::Point(51, 138);
+			this->tbEmail->Name = L"tbEmail";
+			this->tbEmail->Size = System::Drawing::Size(194, 22);
+			this->tbEmail->TabIndex = 2;
+			this->tbEmail->Text = L"Email";
 			// 
 			// label2
 			// 
@@ -117,85 +143,79 @@ namespace MoneyTransferApp {
 			this->label2->Text = L"Log in to your existing account";
 			this->label2->Click += gcnew System::EventHandler(this, &MainForm::label2_Click_1);
 			// 
-			// textBox1
+			// label1
 			// 
-			this->textBox1->Location = System::Drawing::Point(51, 138);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(194, 22);
-			this->textBox1->TabIndex = 2;
-			this->textBox1->Text = L"Email";
-			// 
-			// textBox2
-			// 
-			this->textBox2->Location = System::Drawing::Point(51, 175);
-			this->textBox2->Name = L"textBox2";
-			this->textBox2->Size = System::Drawing::Size(194, 22);
-			this->textBox2->TabIndex = 3;
-			this->textBox2->Text = L"Password";
-			// 
-			// button1
-			// 
-			this->button1->BackColor = System::Drawing::Color::Black;
-			this->button1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 8.25F, System::Drawing::FontStyle::Bold));
-			this->button1->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->button1->Location = System::Drawing::Point(51, 219);
-			this->button1->Name = L"button1";
-			this->button1->Size = System::Drawing::Size(194, 30);
-			this->button1->TabIndex = 4;
-			this->button1->Text = L"Sign in";
-			this->button1->UseVisualStyleBackColor = false;
+			this->label1->AutoSize = true;
+			this->label1->Font = (gcnew System::Drawing::Font(L"Segoe UI", 13, System::Drawing::FontStyle::Bold));
+			this->label1->Location = System::Drawing::Point(46, 39);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(84, 30);
+			this->label1->TabIndex = 0;
+			this->label1->Text = L"Sign In";
 			// 
 			// panel2
 			// 
 			this->panel2->BackColor = System::Drawing::Color::White;
-			this->panel2->Controls->Add(this->textBox5);
-			this->panel2->Controls->Add(this->button2);
-			this->panel2->Controls->Add(this->textBox3);
-			this->panel2->Controls->Add(this->textBox4);
-			this->panel2->Controls->Add(this->label3);
+			this->panel2->Controls->Add(this->tbName);
+			this->panel2->Controls->Add(this->btnSignUp);
+			this->panel2->Controls->Add(this->tbPassword1);
+			this->panel2->Controls->Add(this->tbEmail1);
+			this->panel2->Controls->Add(this->lInfo);
 			this->panel2->Controls->Add(this->label4);
 			this->panel2->Location = System::Drawing::Point(522, 102);
 			this->panel2->Name = L"panel2";
 			this->panel2->Size = System::Drawing::Size(296, 386);
 			this->panel2->TabIndex = 1;
 			// 
-			// button2
+			// tbName
 			// 
-			this->button2->BackColor = System::Drawing::Color::Black;
-			this->button2->Font = (gcnew System::Drawing::Font(L"Segoe UI", 8.25F, System::Drawing::FontStyle::Bold));
-			this->button2->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
-			this->button2->Location = System::Drawing::Point(51, 256);
-			this->button2->Name = L"button2";
-			this->button2->Size = System::Drawing::Size(194, 30);
-			this->button2->TabIndex = 4;
-			this->button2->Text = L"Sign Up";
-			this->button2->UseVisualStyleBackColor = false;
+			this->tbName->Location = System::Drawing::Point(51, 138);
+			this->tbName->Name = L"tbName";
+			this->tbName->Size = System::Drawing::Size(194, 22);
+			this->tbName->TabIndex = 5;
+			this->tbName->Text = L"Name";
 			// 
-			// textBox3
+			// btnSignUp
 			// 
-			this->textBox3->Location = System::Drawing::Point(51, 212);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(194, 22);
-			this->textBox3->TabIndex = 3;
-			this->textBox3->Text = L"Password";
+			this->btnSignUp->BackColor = System::Drawing::Color::Black;
+			this->btnSignUp->Font = (gcnew System::Drawing::Font(L"Segoe UI", 8.25F, System::Drawing::FontStyle::Bold));
+			this->btnSignUp->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->btnSignUp->Location = System::Drawing::Point(51, 256);
+			this->btnSignUp->Name = L"btnSignUp";
+			this->btnSignUp->Size = System::Drawing::Size(194, 30);
+			this->btnSignUp->TabIndex = 4;
+			this->btnSignUp->Text = L"Sign Up";
+			this->btnSignUp->UseVisualStyleBackColor = false;
+			this->btnSignUp->Click += gcnew System::EventHandler(this, &MainForm::btnSignUp_Click);
 			// 
-			// textBox4
+			// tbPassword1
 			// 
-			this->textBox4->Location = System::Drawing::Point(51, 175);
-			this->textBox4->Name = L"textBox4";
-			this->textBox4->Size = System::Drawing::Size(194, 22);
-			this->textBox4->TabIndex = 2;
-			this->textBox4->Text = L"Email";
+			this->tbPassword1->Location = System::Drawing::Point(51, 212);
+			this->tbPassword1->Name = L"tbPassword1";
+			this->tbPassword1->Size = System::Drawing::Size(194, 22);
+			this->tbPassword1->TabIndex = 3;
+			this->tbPassword1->Text = L"Password";
 			// 
-			// label3
+			// tbEmail1
 			// 
-			this->label3->AutoSize = true;
-			this->label3->Font = (gcnew System::Drawing::Font(L"Segoe UI", 8));
-			this->label3->Location = System::Drawing::Point(47, 85);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(181, 19);
-			this->label3->TabIndex = 1;
-			this->label3->Text = L"Create a brand new account";
+			this->tbEmail1->Location = System::Drawing::Point(51, 175);
+			this->tbEmail1->Name = L"tbEmail1";
+			this->tbEmail1->Size = System::Drawing::Size(194, 22);
+			this->tbEmail1->TabIndex = 2;
+			this->tbEmail1->Text = L"Email";
+			// 
+			// lInfo
+			// 
+			this->lInfo->AutoSize = true;
+			this->lInfo->Font = (gcnew System::Drawing::Font(L"Segoe UI", 8));
+			this->lInfo->ForeColor = System::Drawing::Color::Red;
+			this->lInfo->Location = System::Drawing::Point(56, 310);
+			this->lInfo->Name = L"lInfo";
+			this->lInfo->Size = System::Drawing::Size(172, 19);
+			this->lInfo->TabIndex = 1;
+			this->lInfo->Text = L"Your password is too weak";
+			this->lInfo->Visible = false;
+			this->lInfo->Click += gcnew System::EventHandler(this, &MainForm::label3_Click);
 			// 
 			// label4
 			// 
@@ -207,14 +227,6 @@ namespace MoneyTransferApp {
 			this->label4->TabIndex = 0;
 			this->label4->Text = L"Sign Up";
 			this->label4->Click += gcnew System::EventHandler(this, &MainForm::label4_Click);
-			// 
-			// textBox5
-			// 
-			this->textBox5->Location = System::Drawing::Point(51, 138);
-			this->textBox5->Name = L"textBox5";
-			this->textBox5->Size = System::Drawing::Size(194, 22);
-			this->textBox5->TabIndex = 5;
-			this->textBox5->Text = L"Name";
 			// 
 			// MainForm
 			// 
@@ -244,6 +256,11 @@ namespace MoneyTransferApp {
 	private: System::Void label2_Click_1(System::Object^ sender, System::EventArgs^ e) {
 	}
 private: System::Void label4_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void label3_Click(System::Object^ sender, System::EventArgs^ e) {
+}
+private: System::Void btnSignUp_Click(System::Object^ sender, System::EventArgs^ e) {
+	lInfo -> Visible = true;
 }
 };
 }

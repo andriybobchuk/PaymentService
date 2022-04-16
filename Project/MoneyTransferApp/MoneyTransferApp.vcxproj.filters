@@ -21,12 +21,18 @@
     <ClCompile Include="ClientForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BaseUser.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="ClientForm.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseUser.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
