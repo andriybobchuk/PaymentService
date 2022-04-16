@@ -1,27 +1,58 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Header Files">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
       <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    <Filter Include="model">
+      <UniqueIdentifier>{d84d9ba5-b136-4585-bea7-36393f853458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="controller">
+      <UniqueIdentifier>{74a49237-0a6b-446b-8fbf-20bd66b44a77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Miscellaneous">
+      <UniqueIdentifier>{ac3fd721-0dbe-41c8-8802-07c6f925d70e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="libraries">
+      <UniqueIdentifier>{6fde11c7-6fb8-4745-9ca2-31ee44a4a964}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4473cfea-270d-49c0-ae74-9f8e913718dd}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="MainForm.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="DebitAccount.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="CreditAccount.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="Client.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseUser.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseAccount.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="Staff.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="PaymentService.cpp">
+      <Filter>model</Filter>
+    </ClCompile>
+    <ClCompile Include="controller.cpp">
+      <Filter>controller</Filter>
+    </ClCompile>
+    <ClCompile Include="util.cpp">
+      <Filter>Miscellaneous</Filter>
     </ClCompile>
     <ClCompile Include="ClientForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="BaseUser.cpp">
+    <ClCompile Include="MainForm.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -32,8 +63,35 @@
     <ClInclude Include="ClientForm.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Client.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="BaseAccount.h">
+      <Filter>model</Filter>
+    </ClInclude>
     <ClInclude Include="BaseUser.h">
-      <Filter>Header Files</Filter>
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="DebitAccount.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="CreditAccount.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="Staff.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="PaymentService.h">
+      <Filter>model</Filter>
+    </ClInclude>
+    <ClInclude Include="controller.h">
+      <Filter>controller</Filter>
+    </ClInclude>
+    <ClInclude Include="util.h">
+      <Filter>Miscellaneous</Filter>
+    </ClInclude>
+    <ClInclude Include="json.hpp">
+      <Filter>libraries</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
