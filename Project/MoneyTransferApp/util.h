@@ -8,15 +8,18 @@
 
 #include <string>
 #include <regex>
-#include "PaymentService.h"
+//#include "PaymentService.h"
 
 //PaymentService* paymentService = PaymentService::getInstance();
+
 
 bool isPasswordSecure(std::string password);
 
 bool isEmailValid(std::string email);
 
 bool isLoginUnique(std::string username, std::string email);
+
+bool isAccessCodeValid(std::string accessCode);
 
 
 #endif //CLIONPROJECTMODEL_UTIL_H

@@ -10,26 +10,23 @@
 #include "PaymentService.h"
 #include "util.h"
 
-PaymentService* paymentService = PaymentService::getInstance();
+//PaymentService* paymentService = PaymentService::getInstance();
 
-void signUp(
-    int id,
+bool signUp(
     std::string username,
     std::string password,
     std::string email
 );
 
-void signUp(
-    int id,
+bool signUp(
     std::string username,
     std::string password,
     std::string email,
-    std::string position
+    std::string position,
+    std::string accessCode
 );
 
-void signInClient(std::string login, std::string password);
-
-void signInStaff(std::string login, std::string password);
+bool signIn(std::string login, std::string password);
 
 
 #endif //CLIONPROJECTMODEL_CONTROLLER_H

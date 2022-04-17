@@ -3,55 +3,73 @@
 //
 
 #include "controller.h"
+#include "database.h"
 
-void signUp(std::string username, std::string password, std::string email) {
+bool signUp(std::string username, std::string password, std::string email) {
     if (
         isPasswordSecure(password)
         && isEmailValid(email)
         && isLoginUnique(username, email)
-        )
-        paymentService->addClient(Client(username, password, email));
+        ) {
+        PaymentService::getInstance()->addClient(Client(username, password, email));
+        serializeToDb("database.txt", PaymentService::getInstance());
+        return true;
+    }
+    return false;
 }
 
-void signUp(std::string username, std::string password, std::string email, std::string position) {
+bool signUp(
+    std::string username, 
+    std::string password, 
+    std::string email, 
+    std::string position,
+    std::string accessCode
+
+) {
     if (
         isPasswordSecure(password)
         && isEmailValid(email)
         && isLoginUnique(username, email)
-        )
-        paymentService->addStaff(Staff(username, password, email, position));
+        && isAccessCodeValid(accessCode)
+        ) {
+        PaymentService::getInstance()->addStaff(Staff(username, password, email, position));
+        serializeToDb("database.txt", PaymentService::getInstance());
+        return true;
+    }
+    return false;
 }
 
-void signInClient(std::string login, std::string password) {
+bool signIn(std::string login, std::string password) {
     auto it = std::find_if(
-        paymentService->getClients().begin(),
-        paymentService->getClients().end(),
+        PaymentService::getInstance()->getClients().begin(),
+        PaymentService::getInstance()->getClients().end(),
         [&login](Client& client) {
             return client.getUsername() == login
                 || client.getEmail() == login;
         });
 
-    if (it != paymentService->getClients().end()) {
+    if (it != PaymentService::getInstance()->getClients().end()) {
         // found element. it is an iterator to the first matching element.
         if (it->getPassword() == password) {
-            // TODO: notify the UI
+            // notify the UI
+            return true;
         }
     }
-}
-
-void signInStaff(std::string login, std::string password) {
-    auto it = std::find_if(
-        paymentService->getStaff().begin(),
-        paymentService->getStaff().end(),
+    auto itr = std::find_if(
+        PaymentService::getInstance()->getStaff().begin(),
+        PaymentService::getInstance()->getStaff().end(),
         [&login](Staff& staff) {
             return staff.getUsername() == login
                 || staff.getEmail() == login;
         });
 
-    if (it != paymentService->getStaff().end()) {
+    if (itr != PaymentService::getInstance()->getStaff().end()) {
         // found element. it is an iterator to the first matching element.
-        if (it->getPassword() == password) {
-            // TODO: notify the UI
+        if (itr->getPassword() == password) {
+            // notify the UI
+            return true;
         }
     }
+    return false;
 }
+

@@ -3,6 +3,7 @@
 //
 
 #include "util.h"
+#include "PaymentService.h"
 
 
 bool isPasswordSecure(std::string password) {
@@ -33,15 +34,33 @@ bool isEmailValid(std::string email) {
 
 bool isLoginUnique(std::string username, std::string email) {
 
-    //for (auto client : paymentService->getClients()) {
-    //    if (client.getUsername() == username || client.getEmail() == email) {
-    //        return false;
-    //    }
-    //}
-    //for (auto staff : paymentService->getStaff()) {
-    //    if (staff.getUsername() == username || staff.getEmail() == email) {
-    //        return false;
-    //    }
-    //}
+    for (auto client : PaymentService::getInstance()->getClients()) {
+        if (client.getUsername() == username || client.getEmail() == email) {
+            return false;
+        }
+    }
+    for (auto staff : PaymentService::getInstance()->getStaff()) {
+        if (staff.getUsername() == username || staff.getEmail() == email) {
+            return false;
+        }
+    }
+    return true;
+}
+
+bool isAccessCodeValid(std::string accessCode) {
+
+    std::vector<std::string> accessCodes{
+    "5LTLx?.]",
+    "s~]Tz#3q",
+    "p3tA:&'<",
+    "}Hz9(&$a"
+    };
+
+    if (std::find(
+        accessCodes.begin(), 
+        accessCodes.end(), 
+        accessCode) != accessCodes.end()){
+        return true;
+    }
     return true;
 }

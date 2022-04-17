@@ -1,0 +1,1 @@
+{"paymentService":{"clients":[{"username":"viktor","email":"vikdj@gmail.com","password":"}Hz9(&$a","debitAccounts":[],"creditAccounts":[]}],"staff": [{"username":"Andriibobchuk","email":"addj@gmail.com","password":"}Hz9(&$a","position":"Administrator"}],"debitAccounts": [],"creditAccounts": []}}
