@@ -70,6 +70,10 @@ namespace MoneyTransferApp {
 
 	private: System::Windows::Forms::Button^ btnSignUpStaff;
 	private: System::Windows::Forms::Label^ lFail;
+	private: System::Windows::Forms::Panel^ pEntry;
+	private: System::Windows::Forms::Panel^ panel1;
+	private: System::Windows::Forms::Label^ lPanelEmail;
+	private: System::Windows::Forms::Label^ lPanelRole;
 
 	protected:
 
@@ -110,8 +114,14 @@ namespace MoneyTransferApp {
 			this->tbEmail1 = (gcnew System::Windows::Forms::TextBox());
 			this->lInfo = (gcnew System::Windows::Forms::Label());
 			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->pEntry = (gcnew System::Windows::Forms::Panel());
+			this->panel1 = (gcnew System::Windows::Forms::Panel());
+			this->lPanelEmail = (gcnew System::Windows::Forms::Label());
+			this->lPanelRole = (gcnew System::Windows::Forms::Label());
 			this->pSignIn->SuspendLayout();
 			this->pSignUp->SuspendLayout();
+			this->pEntry->SuspendLayout();
+			this->panel1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// pSignIn
@@ -123,7 +133,7 @@ namespace MoneyTransferApp {
 			this->pSignIn->Controls->Add(this->tbEmail);
 			this->pSignIn->Controls->Add(this->label2);
 			this->pSignIn->Controls->Add(this->label1);
-			this->pSignIn->Location = System::Drawing::Point(201, 61);
+			this->pSignIn->Location = System::Drawing::Point(84, 61);
 			this->pSignIn->Name = L"pSignIn";
 			this->pSignIn->Size = System::Drawing::Size(296, 329);
 			this->pSignIn->TabIndex = 0;
@@ -135,9 +145,9 @@ namespace MoneyTransferApp {
 			this->lFail->ForeColor = System::Drawing::Color::Red;
 			this->lFail->Location = System::Drawing::Point(88, 271);
 			this->lFail->Name = L"lFail";
-			this->lFail->Size = System::Drawing::Size(120, 19);
+			this->lFail->Size = System::Drawing::Size(111, 19);
 			this->lFail->TabIndex = 11;
-			this->lFail->Text = L"Wrong login data!";
+			this->lFail->Text = L"No such account";
 			this->lFail->Visible = false;
 			// 
 			// btnSignIn
@@ -205,7 +215,7 @@ namespace MoneyTransferApp {
 			this->pSignUp->Controls->Add(this->tbEmail1);
 			this->pSignUp->Controls->Add(this->lInfo);
 			this->pSignUp->Controls->Add(this->label4);
-			this->pSignUp->Location = System::Drawing::Point(515, 61);
+			this->pSignUp->Location = System::Drawing::Point(398, 61);
 			this->pSignUp->Name = L"pSignUp";
 			this->pSignUp->Size = System::Drawing::Size(296, 526);
 			this->pSignUp->TabIndex = 1;
@@ -334,22 +344,77 @@ namespace MoneyTransferApp {
 			this->label4->Text = L"Sign Up";
 			this->label4->Click += gcnew System::EventHandler(this, &MainForm::label4_Click);
 			// 
+			// pEntry
+			// 
+			this->pEntry->Controls->Add(this->pSignUp);
+			this->pEntry->Controls->Add(this->pSignIn);
+			this->pEntry->Location = System::Drawing::Point(274, 1);
+			this->pEntry->Name = L"pEntry";
+			this->pEntry->Size = System::Drawing::Size(787, 667);
+			this->pEntry->TabIndex = 2;
+			// 
+			// panel1
+			// 
+			this->panel1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
+				| System::Windows::Forms::AnchorStyles::Left));
+			this->panel1->AutoSize = true;
+			this->panel1->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(29)), static_cast<System::Int32>(static_cast<System::Byte>(25)),
+				static_cast<System::Int32>(static_cast<System::Byte>(25)));
+			this->panel1->Controls->Add(this->lPanelEmail);
+			this->panel1->Controls->Add(this->lPanelRole);
+			this->panel1->Location = System::Drawing::Point(0, 1);
+			this->panel1->Name = L"panel1";
+			this->panel1->Size = System::Drawing::Size(268, 671);
+			this->panel1->TabIndex = 3;
+			// 
+			// lPanelEmail
+			// 
+			this->lPanelEmail->AutoSize = true;
+			this->lPanelEmail->Font = (gcnew System::Drawing::Font(L"Segoe UI", 10, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lPanelEmail->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->lPanelEmail->Location = System::Drawing::Point(31, 100);
+			this->lPanelEmail->Name = L"lPanelEmail";
+			this->lPanelEmail->Size = System::Drawing::Size(218, 23);
+			this->lPanelEmail->TabIndex = 1;
+			this->lPanelEmail->Text = L"andriybobchuk@gmail.com";
+			this->lPanelEmail->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
+			// lPanelRole
+			// 
+			this->lPanelRole->Anchor = static_cast<System::Windows::Forms::AnchorStyles>(((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Left)
+				| System::Windows::Forms::AnchorStyles::Right));
+			this->lPanelRole->AutoSize = true;
+			this->lPanelRole->Font = (gcnew System::Drawing::Font(L"Segoe UI", 20, System::Drawing::FontStyle::Bold, System::Drawing::GraphicsUnit::Point,
+				static_cast<System::Byte>(0)));
+			this->lPanelRole->ForeColor = System::Drawing::SystemColors::ButtonHighlight;
+			this->lPanelRole->Location = System::Drawing::Point(52, 37);
+			this->lPanelRole->Name = L"lPanelRole";
+			this->lPanelRole->Size = System::Drawing::Size(181, 46);
+			this->lPanelRole->TabIndex = 0;
+			this->lPanelRole->Text = L"Ins\'n\'Outs";
+			this->lPanelRole->TextAlign = System::Drawing::ContentAlignment::MiddleCenter;
+			// 
 			// MainForm
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
 			this->BackColor = System::Drawing::Color::FromArgb(static_cast<System::Int32>(static_cast<System::Byte>(248)), static_cast<System::Int32>(static_cast<System::Byte>(248)),
 				static_cast<System::Int32>(static_cast<System::Byte>(248)));
 			this->ClientSize = System::Drawing::Size(1060, 669);
-			this->Controls->Add(this->pSignUp);
-			this->Controls->Add(this->pSignIn);
+			this->Controls->Add(this->panel1);
+			this->Controls->Add(this->pEntry);
 			this->Name = L"MainForm";
-			this->Text = L"MainForm";
+			this->Text = L"                     ";
 			this->Load += gcnew System::EventHandler(this, &MainForm::MainForm_Load);
 			this->pSignIn->ResumeLayout(false);
 			this->pSignIn->PerformLayout();
 			this->pSignUp->ResumeLayout(false);
 			this->pSignUp->PerformLayout();
+			this->pEntry->ResumeLayout(false);
+			this->panel1->ResumeLayout(false);
+			this->panel1->PerformLayout();
 			this->ResumeLayout(false);
+			this->PerformLayout();
 
 		}
 #pragma endregion
@@ -427,18 +492,31 @@ private: System::Void btnSignIn_Click(System::Object^ sender, System::EventArgs^
 	std::string password = context.marshal_as<std::string>(tbPassword->Text);
 	std::string email = context.marshal_as<std::string>(tbEmail->Text);
 
-	if (!signIn(email, password)) {
-		lFail->Visible = true;
-	} else {
-		lFail->Visible = false;
-	}
+	//if (!signIn(email, password)) {
+	//	lFail->Visible = true;
+	//} else {
+	//	
+	//}
+
+	std::string myEmail = signIn(email, password).getEmail();
+	drawUi(myEmail);
+
+
 }
 
-	   void drawUi() {
+	   public:
+	   void drawUi(std::string myEmail) {
+		   pEntry->Visible = false;
 
+		   //convert strings from C++ to CLI
+		   System::String^ email = gcnew System::String(myEmail.c_str());
+		   lPanelEmail->Text = email;
 	   }
 
 
 
 };
+
+
+
 }

@@ -26,7 +26,7 @@ bool signUp(
     std::string accessCode
 );
 
-bool signIn(std::string login, std::string password);
+BaseUser signIn(std::string login, std::string password);
 
 
 #endif //CLIONPROJECTMODEL_CONTROLLER_H

@@ -1,0 +1,5 @@
+E:/Documents/cpp_projects/polsl-aei-cp4-ang/2d98c560-gr12-repo/Project/build-MoneyTransferQtApp-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/edit_cache.dir
+E:/Documents/cpp_projects/polsl-aei-cp4-ang/2d98c560-gr12-repo/Project/build-MoneyTransferQtApp-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/MoneyTransferQtApp.dir
+E:/Documents/cpp_projects/polsl-aei-cp4-ang/2d98c560-gr12-repo/Project/build-MoneyTransferQtApp-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/rebuild_cache.dir
+E:/Documents/cpp_projects/polsl-aei-cp4-ang/2d98c560-gr12-repo/Project/build-MoneyTransferQtApp-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/MoneyTransferQtApp_autogen_timestamp_deps.dir
+E:/Documents/cpp_projects/polsl-aei-cp4-ang/2d98c560-gr12-repo/Project/build-MoneyTransferQtApp-Desktop_Qt_6_2_4_MinGW_64_bit-Debug/CMakeFiles/MoneyTransferQtApp_autogen.dir

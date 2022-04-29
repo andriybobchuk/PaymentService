@@ -1,5 +1,7 @@
 #include "BaseUser.h"
 
+BaseUser::BaseUser() = default;
+
 BaseUser::BaseUser(std::string username, std::string password, std::string email) {
     mUsername = username;
     mPassword = password;
