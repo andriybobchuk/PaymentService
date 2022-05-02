@@ -1,0 +1,1 @@
+{"paymentService":{"clients":[{"username":"andriy","email":"andriy@gmail.com","password":"#fAppx8n","debitAccounts":[],"creditAccounts":[]}],"staff": [],"debitAccounts": [],"creditAccounts": []}}

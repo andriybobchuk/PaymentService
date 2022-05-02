@@ -3,7 +3,7 @@
 #include <QtWidgets/QMainWindow>
 #include "ui_PaymentServiceWithQt.h"
 
-class PaymentServiceWithQt : public QMainWindow
+class PaymentServiceWithQt : public QMainWindow, private Ui::PaymentServiceWithQtClass 
 {
     Q_OBJECT
 
@@ -12,4 +12,14 @@ public:
 
 private:
     Ui::PaymentServiceWithQtClass ui;
+
+
+
+private slots:
+    void signUpClient();
+    void signInClient();
+    void signInStaff();
+
+
+
 };

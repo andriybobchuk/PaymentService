@@ -15,8 +15,7 @@
     <Keyword>QtVS_v304</Keyword>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
     <WindowsTargetPlatformVersion Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">10.0.19041.0</WindowsTargetPlatformVersion>
-    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')"
-      >$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
+    <QtMsBuild Condition="'$(QtMsBuild)'=='' OR !Exists('$(QtMsBuild)\qt.targets')">$(MSBuildProjectDirectory)\QtMsBuild</QtMsBuild>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
@@ -41,11 +40,8 @@
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
-  <Target Name="QtMsBuildNotFound"
-    BeforeTargets="CustomBuild;ClCompile"
-    Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
-    <Message Importance="High"
-      Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
+  <Target Name="QtMsBuildNotFound" BeforeTargets="CustomBuild;ClCompile" Condition="!Exists('$(QtMsBuild)\qt.targets') or !Exists('$(QtMsBuild)\qt.props')">
+    <Message Importance="High" Text="QtMsBuild: could not locate qt.targets, qt.props; project may not build correctly." />
   </Target>
   <ImportGroup Label="ExtensionSettings" />
   <ImportGroup Label="Shared" />
@@ -89,12 +85,43 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <QtRcc Include="PaymentServiceWithQt.qrc"/>
-    <QtUic Include="PaymentServiceWithQt.ui"/>
-    <QtMoc Include="PaymentServiceWithQt.h"/>
-    <ClCompile Include="PaymentServiceWithQt.cpp"/>
-    <ClCompile Include="main.cpp"/>
-
+    <ClCompile Include="ClientForm.cpp" />
+    <ClCompile Include="Staff.cpp" />
+    <ClCompile Include="StaffForm.cpp" />
+    <ClCompile Include="util.cpp" />
+    <QtRcc Include="PaymentServiceWithQt.qrc" />
+    <QtUic Include="ClientForm.ui" />
+    <QtUic Include="PaymentServiceWithQt.ui" />
+    <QtMoc Include="PaymentServiceWithQt.h" />
+    <ClCompile Include="BaseAccount.cpp" />
+    <ClCompile Include="BaseUser.cpp" />
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="controller.cpp" />
+    <ClCompile Include="CreditAccount.cpp" />
+    <ClCompile Include="database.cpp" />
+    <ClCompile Include="DebitAccount.cpp" />
+    <ClCompile Include="PaymentService.cpp" />
+    <ClCompile Include="PaymentServiceWithQt.cpp" />
+    <ClCompile Include="main.cpp" />
+    <QtUic Include="StaffForm.ui" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BaseAccount.h" />
+    <ClInclude Include="BaseUser.h" />
+    <ClInclude Include="Client.h" />
+    <QtMoc Include="ClientForm.h" />
+    <ClInclude Include="controller.h" />
+    <ClInclude Include="CreditAccount.h" />
+    <ClInclude Include="database.h" />
+    <ClInclude Include="DebitAccount.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="PaymentService.h" />
+    <ClInclude Include="Staff.h" />
+    <QtMoc Include="StaffForm.h" />
+    <ClInclude Include="util.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="cpp.hint" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Condition="Exists('$(QtMsBuild)\qt.targets')">
