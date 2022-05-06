@@ -1,8 +1,20 @@
 #include "Staff.h"
 
-Staff::Staff(std::string username, std::string password, std::string email, std::string position) : BaseUser(username, password, email) {
+Staff::Staff(
+    std::string username, 
+    std::string password, 
+    std::string email, 
+    std::string position
+) : BaseUser(username, password, email) {
     mPosition = position;
 }
+
+// move assignment
+//Staff& Staff::operator=(Staff&& other) noexcept
+//{
+//    mPosition = std::move(other.getPosition());
+//    return *this;
+//}
 
 std::ostream& operator<<(std::ostream& os, Staff& staff) {
     os

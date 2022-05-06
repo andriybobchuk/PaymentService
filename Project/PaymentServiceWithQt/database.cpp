@@ -19,9 +19,9 @@ void deserialize(const std::string& fileName, PaymentService* paymentService) {
     bufferStringStream << inputFileStream.rdbuf();
     std::string fileAsString = bufferStringStream.str();
 
+
     try {
         nlohmann::json j = nlohmann::json::parse(fileAsString);
-
 
         nlohmann::json::iterator c = j.find("debitAccounts");
         if (c.key() == "debitAccounts") {
@@ -56,7 +56,8 @@ void deserialize(const std::string& fileName, PaymentService* paymentService) {
                 Client currentClient(
                     j["clients"][i]["username"].get<std::string>(),
                     j["clients"][i]["password"].get<std::string>(),
-                    j["clients"][i]["email"].get<std::string>()
+                    j["clients"][i]["email"].get<std::string>(),
+                    j["clients"][i]["status"].get<std::string>()
 
                 );
                 j["clients"][i]["debitAccounts"].get_to<std::vector<int>>(currentClient.getDebitAccounts());
@@ -68,6 +69,7 @@ void deserialize(const std::string& fileName, PaymentService* paymentService) {
 
         nlohmann::json::iterator c3 = j.find("staff");
         if (c3.key() == "staff") {
+
             for (int i = 0; i < c3.value().size(); i++) {
 
                 Staff currentStaff(

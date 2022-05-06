@@ -1,13 +1,21 @@
 #include "Client.h"
-#include "util.h"
+#include "constants.h"
 
 Client::Client(
     std::string username, 
     std::string password, 
+    std::string email
+) : BaseUser(username, password, email) {
+    mStatus = PENDING_APPROVAL;
+}
+
+Client::Client(
+    std::string username,
+    std::string password,
     std::string email,
     std::string status
 ) : BaseUser(username, password, email) {
-    status = PENDING_APPROVAL;
+    mStatus = status;
 }
 
 Client::Client(
@@ -24,6 +32,15 @@ Client::Client(
     for (auto element : creditAccounts)
         mCreditAccounts.push_back(element);
 }
+
+// move assignment
+//Client& Client::operator=(Client&& other) noexcept
+//{
+//    mStatus = std::move(other.getStatus());
+//    mDebitAccounts = std::move(other.getDebitAccounts());
+//    mCreditAccounts = std::move(other.getCreditAccounts());
+//    return *this;
+//}
 
 const std::string& Client::getStatus() {
     return mStatus;

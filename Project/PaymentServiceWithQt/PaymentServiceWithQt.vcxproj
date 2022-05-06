@@ -110,6 +110,7 @@
     <ClInclude Include="BaseUser.h" />
     <ClInclude Include="Client.h" />
     <QtMoc Include="ClientForm.h" />
+    <ClInclude Include="constants.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="CreditAccount.h" />
     <ClInclude Include="database.h" />

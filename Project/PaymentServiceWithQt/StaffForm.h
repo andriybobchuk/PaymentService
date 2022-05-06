@@ -8,7 +8,7 @@ class StaffForm : public QWidget
 	Q_OBJECT
 
 public:
-	StaffForm(QWidget *parent = Q_NULLPTR);
+	StaffForm(QWidget* parent = Q_NULLPTR);
 	~StaffForm();
 
 private:
@@ -16,4 +16,5 @@ private:
 
 private slots:
 	void logOut();
+	void approveById(int id);
 };

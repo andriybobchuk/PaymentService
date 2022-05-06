@@ -48,7 +48,7 @@ void PaymentService::setCreditAccounts(const std::vector<CreditAccount>& mCredit
 }
 
 std::ostream& operator<<(std::ostream& os, PaymentService* paymentService) {
-    os << "{\"paymentService\":{\"clients\":[";
+    os << "{\"clients\":[";
     for (int i = 0; i < paymentService->mClients.size(); i++) {
         os << paymentService->mClients.at(i);
         if (i < paymentService->mClients.size() - 1) {
@@ -79,7 +79,7 @@ std::ostream& operator<<(std::ostream& os, PaymentService* paymentService) {
             os << ",";
         }
     }
-    os << "]}}";
+    os << "]}";
 
     return os;
 }

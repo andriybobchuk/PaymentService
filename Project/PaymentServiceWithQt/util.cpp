@@ -8,6 +8,11 @@
 
 bool isPasswordSecure(std::string password) {
 
+
+    //todo: Remove on release
+    return true;
+
+
     std::regex validPasswordPattern(
         R"(^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^ a-zA-Z0-9]).{8,}$)"
     );
@@ -22,6 +27,10 @@ bool isPasswordSecure(std::string password) {
 
 bool isEmailValid(std::string email) {
 
+    //todo: Remove on release
+    return true;
+
+
     std::regex validEmailPattern("([a-zA-Z0-9.]+@[a-zA-Z]+\\.[a-zA-Z.]{2,})");
 
     if (!std::regex_match(email, validEmailPattern)) {
@@ -33,6 +42,10 @@ bool isEmailValid(std::string email) {
 }
 
 bool isLoginUnique(std::string username, std::string email) {
+
+    //todo: Remove on release
+    return true;
+
 
     for (auto client : PaymentService::getInstance()->getClients()) {
         if (client.getUsername() == username || client.getEmail() == email) {
@@ -48,6 +61,9 @@ bool isLoginUnique(std::string username, std::string email) {
 }
 
 bool isAccessCodeValid(std::string accessCode) {
+
+    //todo: Remove on release
+    return true;
 
     std::vector<std::string> accessCodes{
     "5LTLx?.]",

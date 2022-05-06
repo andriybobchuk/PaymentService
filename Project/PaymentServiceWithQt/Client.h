@@ -15,6 +15,12 @@ public:
 	Client(
 		std::string username,
 		std::string password,
+		std::string email
+	);
+
+	Client(
+		std::string username,
+		std::string password,
 		std::string email,
 		std::string status
 	);
@@ -27,6 +33,9 @@ public:
 		std::vector<int> debitAccounts,
 		std::vector<int> creditAccounts
 	);
+
+	// &&
+	//Client& operator=(Client&& other) noexcept;
 
 	const std::string& getStatus();
 

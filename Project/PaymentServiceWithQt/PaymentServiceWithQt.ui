@@ -225,9 +225,9 @@ color: #FFFFFF
       <widget class="QLabel" name="l_clientSignInError">
        <property name="geometry">
         <rect>
-         <x>100</x>
+         <x>70</x>
          <y>290</y>
-         <width>71</width>
+         <width>161</width>
          <height>31</height>
         </rect>
        </property>
@@ -239,7 +239,7 @@ color: #FFFFFF
         </font>
        </property>
        <property name="text">
-        <string>Wrong data!</string>
+        <string>No approved accout found</string>
        </property>
       </widget>
      </widget>

@@ -17,6 +17,9 @@ ClientForm::~ClientForm()
 
 
 void ClientForm::logOut() {
+
+	safelyEndSession();
+
 	PaymentServiceWithQt* entry = new PaymentServiceWithQt();
 	entry->show();
 	close();

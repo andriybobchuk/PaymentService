@@ -2,6 +2,7 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_PaymentServiceWithQt.h"
+#include "controller.h"
 
 class PaymentServiceWithQt : public QMainWindow, private Ui::PaymentServiceWithQtClass 
 {
@@ -16,9 +17,9 @@ private:
 
 
 private slots:
-    void signUpClient();
-    void signInClient();
-    void signInStaff();
+    void onClickSignUpClient();
+    void onClickSignInClient();
+    void onClickSignInStaff();
 
 
 

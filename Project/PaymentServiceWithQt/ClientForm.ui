@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>811</width>
+    <width>790</width>
     <height>511</height>
    </rect>
   </property>
@@ -23,7 +23,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>2</number>
    </property>
    <widget class="QWidget" name="tab">
     <property name="styleSheet">
@@ -77,9 +77,9 @@ background-color: #F8F8F8;
      <property name="geometry">
       <rect>
        <x>180</x>
-       <y>130</y>
+       <y>80</y>
        <width>421</width>
-       <height>241</height>
+       <height>291</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -90,9 +90,9 @@ background: #FFFFFF
      <widget class="QLabel" name="label_2">
       <property name="geometry">
        <rect>
-        <x>170</x>
-        <y>40</y>
-        <width>71</width>
+        <x>0</x>
+        <y>30</y>
+        <width>421</width>
         <height>61</height>
        </rect>
       </property>
@@ -105,14 +105,17 @@ background: #FFFFFF
       <property name="text">
        <string>Client</string>
       </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
      </widget>
-     <widget class="QLabel" name="l_user">
+     <widget class="QLabel" name="l_userEmail">
       <property name="geometry">
        <rect>
-        <x>120</x>
-        <y>90</y>
-        <width>181</width>
-        <height>61</height>
+        <x>0</x>
+        <y>120</y>
+        <width>421</width>
+        <height>41</height>
        </rect>
       </property>
       <property name="font">
@@ -122,14 +125,17 @@ background: #FFFFFF
        </font>
       </property>
       <property name="text">
-       <string>andribobchuk@gmail.com</string>
+       <string>Email: andribobchuk@gmail.com</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_logOut">
       <property name="geometry">
        <rect>
         <x>140</x>
-        <y>180</y>
+        <y>220</y>
         <width>131</width>
         <height>24</height>
        </rect>
@@ -148,6 +154,51 @@ color: #FFFFFF
       </property>
       <property name="text">
        <string>Log Out</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="l_user_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>160</y>
+        <width>421</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <italic>true</italic>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Verified</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="l_userUsername">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>90</y>
+        <width>421</width>
+        <height>41</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>11</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Username: andriy</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
     </widget>

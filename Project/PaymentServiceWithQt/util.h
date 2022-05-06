@@ -12,10 +12,6 @@
 
 //PaymentService* paymentService = PaymentService::getInstance();
 
-// Constants used across the whole project
-static const std::string PENDING_APPROVAL = "pending approval";
-static const std::string APPROVED = "approved";
-
 
 bool isPasswordSecure(std::string password);
 

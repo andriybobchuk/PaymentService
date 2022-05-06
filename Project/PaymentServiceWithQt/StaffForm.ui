@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>801</width>
+    <width>788</width>
     <height>504</height>
    </rect>
   </property>
@@ -84,6 +84,26 @@ selection-background-color: #5492dc
      </property>
      <property name="cornerButtonEnabled">
       <bool>false</bool>
+     </property>
+    </widget>
+    <widget class="QLabel" name="l_signUpInfo">
+     <property name="geometry">
+      <rect>
+       <x>210</x>
+       <y>50</y>
+       <width>531</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>11</pointsize>
+       <italic>true</italic>
+       <bold>false</bold>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
      </property>
     </widget>
    </widget>

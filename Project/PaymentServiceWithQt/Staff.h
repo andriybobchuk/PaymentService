@@ -17,6 +17,8 @@ public:
 		std::string position
 	);
 
+	// &&
+	//Staff& operator=(Staff&& other) noexcept;
 
 	friend std::ostream& operator<<(std::ostream& os, Staff& staff);
 

@@ -2,6 +2,8 @@
 #include "../MoneyTransferApp/controller.h"
 #include "ClientForm.h"
 #include "StaffForm.h"
+#include "database.h"
+#include "constants.h"
 
 PaymentServiceWithQt::PaymentServiceWithQt(QWidget *parent)
     : QMainWindow(parent)
@@ -9,17 +11,18 @@ PaymentServiceWithQt::PaymentServiceWithQt(QWidget *parent)
     ui.setupUi(this);
 
     ui.pb_clientSignUp->setAutoDefault(false);
-    connect(ui.pb_clientSignUp, SIGNAL(clicked()), this, SLOT(signUpClient()));
-    connect(ui.pb_clientSignIn, SIGNAL(clicked()), this, SLOT(signInClient()));
-    connect(ui.pb_staffSignIn, SIGNAL(clicked()), this, SLOT(signInStaff()));
+    connect(ui.pb_clientSignUp, SIGNAL(clicked()), this, SLOT(onClickSignUpClient()));
+    connect(ui.pb_clientSignIn, SIGNAL(clicked()), this, SLOT(onClickSignInClient()));
+    connect(ui.pb_staffSignIn, SIGNAL(clicked()), this, SLOT(onClickSignInStaff()));
 
     ui.l_clientSignInError->setVisible(false);
+    //ui.l_clientSignInError->setText(QString::fromStdString("c:" + PaymentService::getInstance()->getClients().size()));
     ui.l_clientSignUpError->setVisible(false);
     ui.l_staffSignInError->setVisible(false);
 
 }
 
-void PaymentServiceWithQt::signUpClient() {
+void PaymentServiceWithQt::onClickSignUpClient() {
     QString username = ui.le_clientSignUpUsername->text();
     QString password = ui.le_clientSignUpPassword->text();
     QString email = ui.le_clientSignUpEmail->text();
@@ -40,22 +43,34 @@ void PaymentServiceWithQt::signUpClient() {
 }
 
 
-void PaymentServiceWithQt::signInClient() {
+void PaymentServiceWithQt::onClickSignInClient() {
     QString login = ui.le_clientSignInLogin->text();
-    QString password = ui.le_clientSignUpPassword->text();
+    QString password = ui.le_clientSignInPassword->text();
 
-    ClientForm* clientForm = new ClientForm();
-    clientForm->show();
-    close();//this will disappear main window
+    if (signInClient(login.toStdString(), password.toStdString())) {
+        ClientForm* clientForm = new ClientForm();
+        clientForm->show();
+        close();//this will disappear main window
+    }
+    else {
+        ui.l_clientSignInError->setVisible(true);
+    }
+    
 }
 
 
-void PaymentServiceWithQt::signInStaff() {
+void PaymentServiceWithQt::onClickSignInStaff() {
+    QString login = ui.le_staffSignInLogin->text();
+    QString password = ui.le_staffSignInPassword->text();
 
+    if (signInStaff(login.toStdString(),password.toStdString())) {
 
-    StaffForm* staffForm = new StaffForm();
-    staffForm->show();
-    close();//this will disappear main window
-
+        StaffForm* staffForm = new StaffForm();
+        staffForm->show();
+        close();//this will disappear main window
+    }
+    else {
+        ui.l_staffSignInError->setVisible(true);
+    }
 }
 

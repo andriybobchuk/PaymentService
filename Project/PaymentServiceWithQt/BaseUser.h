@@ -13,6 +13,9 @@ public:
 
     BaseUser();
 
+    // &&
+    //BaseUser& operator=(BaseUser&& other) noexcept;
+
     virtual const std::string& getUsername();
 
     void setUsername(const std::string& mUsername);

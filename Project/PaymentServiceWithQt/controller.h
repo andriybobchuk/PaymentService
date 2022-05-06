@@ -12,15 +12,22 @@
 
 //PaymentService* paymentService = PaymentService::getInstance();
 
+//BaseUser currentUser; // strores an instance of a current user, wheather it's a client or a staff member.
+
+
 bool signUp(
     std::string username,
     std::string password,
     std::string email
 );
 
-void signInClient(std::string login, std::string password);
+bool signInClient(std::string login, std::string password);
 
-void signInStaff(std::string login, std::string password);
+bool signInStaff(std::string login, std::string password);
+
+void approveClientById(int id);
+
+void safelyEndSession();
 
 
 #endif //CLIONPROJECTMODEL_CONTROLLER_H
