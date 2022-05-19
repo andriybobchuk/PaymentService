@@ -7,7 +7,9 @@ StaffForm::StaffForm(QWidget *parent, Staff* admin) :
 	ui.setupUi(this);
 	this->setFixedSize(QSize(811, 511));
 
-	
+
+
+	setupSettingsTab();
 	setupAccountTable();
 
 
@@ -18,16 +20,12 @@ StaffForm::~StaffForm()
 }
 
 void StaffForm::approveById(int id) {
-
 	approveClientById(id); // Kindly ask controller.cpp to change the database
-
 	setupAccountTable();
 }
 
 void StaffForm::banById(int id) {
-
 	banClientById(id); // Kindly ask controller.cpp to change the database
-
 	setupAccountTable();
 }
 

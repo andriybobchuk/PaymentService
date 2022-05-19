@@ -21,8 +21,9 @@ private:
 	Ui::ClientForm ui;
 
 private slots:
+	void setupCreateAccountPanel();
 	void logOut();
-	void displayAccountList();
+	void setupAccountTable();
 	void setupSettingsTab();
 	void registerAccount();
 
