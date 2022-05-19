@@ -61,32 +61,21 @@ bool isLoginUnique(std::string username, std::string email) {
     return true;
 }
 
-bool isAccessCodeValid(std::string accessCode) {
 
-    //todo: Remove on release
-    return true;
+int getNewAccountUid() {
 
-    std::vector<std::string> accessCodes{
-    "5LTLx?.]",
-    "s~]Tz#3q",
-    "p3tA:&'<",
-    "}Hz9(&$a"
-    };
+    int newAccountUid = 0;
 
-    if (std::find(
-        accessCodes.begin(), 
-        accessCodes.end(), 
-        accessCode) != accessCodes.end()){
-        return true;
+    for (auto debitAccount : PaymentService::getInstance()->getDebitAccounts()) {
+        if (debitAccount.getUid() > newAccountUid) {
+            newAccountUid = debitAccount.getUid() + 1;
+        }
     }
-    return true;
-}
+    for (auto creditAccount : PaymentService::getInstance()->getCreditAccounts()) {
+        if (creditAccount.getUid() > newAccountUid) {
+            newAccountUid = creditAccount.getUid() + 1;
+        }
+    }
 
-int getRandomUid()
-{
-    std::random_device dev;
-    std::mt19937 rng(dev());
-    std::uniform_int_distribution<std::mt19937::result_type> dist6(1000, 9999); // distribution in range [1000, 9999]
-
-    return dist6(rng);
+    return newAccountUid;
 }

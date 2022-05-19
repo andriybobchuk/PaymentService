@@ -68,11 +68,8 @@ void banClientById(int id) {
 
 bool createDebitAccount(std::string currency, double amount, Client* currentUser)
 {
-    int uid = getRandomUid();
-    if (
-        currency.size() != 0
-        && amount >= 0
-        ) {
+    int uid = getNewAccountUid();
+    if (currency.size() != 0 && amount >= 0) {
 
         PaymentService::getInstance()->addDebitAccount(
             DebitAccount(
@@ -92,11 +89,8 @@ bool createDebitAccount(std::string currency, double amount, Client* currentUser
 
 bool createCreditAccount(std::string currency, double amount, Client* currentUser)
 {
-    int uid = getRandomUid();
-    if (
-        currency.size() != 0
-        && amount >= 0
-        ) {
+    int uid = getNewAccountUid();
+    if (currency.size() != 0 && amount >= 0) {
 
         PaymentService::getInstance()->addCreditAccount(
             CreditAccount(

@@ -58,6 +58,9 @@ void ClientForm::registerAccount() {
 
 void ClientForm::setupAccountTable() {
 
+	ui.tableWidget->clear();
+	ui.tableWidget->setRowCount(0);
+
 	int it = 0;
 	for (auto& debitAccount : PaymentService::getInstance()->getDebitAccounts()) {
 		ui.tableWidget->insertRow(it);

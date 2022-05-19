@@ -2,17 +2,14 @@
 
 
 StaffForm::StaffForm(QWidget *parent, Staff* admin) :
-    QDialog(parent), mAdmin(admin)
-{
+    QDialog(parent), mAdmin(admin) {
 	ui.setupUi(this);
 	this->setFixedSize(QSize(811, 511));
-
-
+	parentWidget()->hide();
 
 	setupSettingsTab();
+
 	setupAccountTable();
-
-
 }
 
 StaffForm::~StaffForm()
@@ -66,6 +63,9 @@ void StaffForm::setupActionButton(int it) {
 }
 
 void StaffForm::setupAccountTable() {
+
+	ui.tableWidget->clear();
+	ui.tableWidget->setRowCount(0);
 
 	int it = 0;
 	// Todo: You shouldn't access the model through view
