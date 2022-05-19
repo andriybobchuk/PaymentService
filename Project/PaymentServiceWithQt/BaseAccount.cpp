@@ -2,14 +2,11 @@
 
 #include <utility>
 
-BaseAccount::BaseAccount(int id, std::string currency, double amount) {
-    mId = id;
-    mCurrency = std::move(currency);
+BaseAccount::BaseAccount(int uid, std::string currency, double amount, std::string status) {
+    mUid = uid;
+    mCurrency = currency;
     mAmount = amount;
-}
-
-int BaseAccount::getId() {
-    return mId;
+    mStatus = status;
 }
 
 std::string BaseAccount::getCurrency() {
@@ -20,12 +17,13 @@ double BaseAccount::getAmount() {
     return mAmount;
 }
 
-int BaseAccount::getId() const {
-    return mId;
+const int BaseAccount::getUid() const {
+    return mUid;
 }
 
-void BaseAccount::setId(int mId) {
-    BaseAccount::mId = mId;
+void BaseAccount::setUid(const int mUid)
+{
+    BaseAccount::mUid = mUid;
 }
 
 const std::string& BaseAccount::getCurrency() const {
@@ -42,4 +40,12 @@ double BaseAccount::getAmount() const {
 
 void BaseAccount::setAmount(double mAmount) {
     BaseAccount::mAmount = mAmount;
+}
+
+std::string BaseAccount::getStatus() const{
+    return mStatus;
+}
+
+void BaseAccount::setStatus(const std::string& mStatus) {
+    BaseAccount::mStatus = mStatus;
 }

@@ -76,15 +76,62 @@ selection-background-color: #5492dc
      <property name="frameShadow">
       <enum>QFrame::Plain</enum>
      </property>
+     <property name="horizontalScrollBarPolicy">
+      <enum>Qt::ScrollBarAlwaysOff</enum>
+     </property>
+     <property name="editTriggers">
+      <set>QAbstractItemView::NoEditTriggers</set>
+     </property>
+     <property name="selectionMode">
+      <enum>QAbstractItemView::SingleSelection</enum>
+     </property>
+     <property name="selectionBehavior">
+      <enum>QAbstractItemView::SelectRows</enum>
+     </property>
      <property name="showGrid">
       <bool>false</bool>
      </property>
      <property name="gridStyle">
       <enum>Qt::NoPen</enum>
      </property>
+     <property name="sortingEnabled">
+      <bool>true</bool>
+     </property>
      <property name="cornerButtonEnabled">
       <bool>false</bool>
      </property>
+     <property name="columnCount">
+      <number>4</number>
+     </property>
+     <attribute name="horizontalHeaderDefaultSectionSize">
+      <number>155</number>
+     </attribute>
+     <attribute name="horizontalHeaderStretchLastSection">
+      <bool>true</bool>
+     </attribute>
+     <attribute name="verticalHeaderVisible">
+      <bool>false</bool>
+     </attribute>
+     <column>
+      <property name="text">
+       <string>Username</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Email</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Status</string>
+      </property>
+     </column>
+     <column>
+      <property name="text">
+       <string>Action</string>
+      </property>
+     </column>
     </widget>
     <widget class="QLabel" name="l_signUpInfo">
      <property name="geometry">
@@ -162,9 +209,9 @@ background: #FFFFFF
      <widget class="QLabel" name="l_user">
       <property name="geometry">
        <rect>
-        <x>120</x>
+        <x>0</x>
         <y>90</y>
-        <width>181</width>
+        <width>421</width>
         <height>61</height>
        </rect>
       </property>
@@ -176,6 +223,9 @@ background: #FFFFFF
       </property>
       <property name="text">
        <string>andribobchuk@gmail.com</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
       </property>
      </widget>
      <widget class="QPushButton" name="pb_logOut">

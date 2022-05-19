@@ -2,7 +2,10 @@
 
 #include <QtWidgets/QMainWindow>
 #include "ui_PaymentServiceWithQt.h"
-#include "controller.h"
+#include "ClientForm.h"
+#include "StaffForm.h"
+#include "database.h"
+#include "constants.h"
 
 class PaymentServiceWithQt : public QMainWindow, private Ui::PaymentServiceWithQtClass 
 {
@@ -13,6 +16,7 @@ public:
 
 private:
     Ui::PaymentServiceWithQtClass ui;
+    ClientForm* clientForm;
 
 
 

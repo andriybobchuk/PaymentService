@@ -11,7 +11,7 @@ class BaseUser {
 
 public:
 
-    BaseUser::BaseUser();
+    BaseUser();
 
     virtual const std::string& getUsername();
 

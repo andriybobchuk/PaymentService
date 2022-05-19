@@ -21,5 +21,7 @@ bool isLoginUnique(std::string username, std::string email);
 
 bool isAccessCodeValid(std::string accessCode);
 
+int getRandomUid();
+
 
 #endif //CLIONPROJECTMODEL_UTIL_H

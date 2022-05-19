@@ -10,6 +10,8 @@ public:
 
 	void setPosition(const std::string& mPosition);
 
+	Staff();
+
 	Staff(
 		std::string username,
 		std::string password,

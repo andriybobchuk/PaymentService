@@ -13,6 +13,6 @@ void serializeToDb(const std::string& fileName, PaymentService* paymentService);
 
 using json = nlohmann::json;
 
-void deserialize(const std::string& fileName, PaymentService* paymentService);
+bool deserialize(const std::string& fileName, PaymentService* paymentService);
 
 #endif //CLIONPROJECTMODEL_DATABASE_H

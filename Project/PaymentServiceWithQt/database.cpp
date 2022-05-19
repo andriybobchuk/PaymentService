@@ -12,26 +12,31 @@ void serializeToDb(const std::string& fileName, PaymentService* paymentService) 
 
 using json = nlohmann::json;
 
-void deserialize(const std::string& fileName, PaymentService* paymentService) {
+bool deserialize(const std::string& fileName, PaymentService* paymentService) {
 
     std::ifstream inputFileStream(fileName);
     std::stringstream bufferStringStream;
     bufferStringStream << inputFileStream.rdbuf();
     std::string fileAsString = bufferStringStream.str();
 
+    //return false;
 
     try {
         nlohmann::json j = nlohmann::json::parse(fileAsString);
+        //return false;
 
         nlohmann::json::iterator c = j.find("debitAccounts");
         if (c.key() == "debitAccounts") {
             for (int i = 0; i < c.value().size(); i++) {
                 DebitAccount currentDebitAccount(
-                    j["debitAccounts"][i]["id"].get<int>(),
+                    j["debitAccounts"][i]["uid"].get<int>(),
                     j["debitAccounts"][i]["currency"].get<std::string>(),
                     j["debitAccounts"][i]["amount"].get<double>(),
+                    j["debitAccounts"][i]["status"].get<std::string>(),
                     j["debitAccounts"][i]["depositRate"].get<double>()
                 );
+                if (currentDebitAccount.getUid() == 0) {
+                }
                 paymentService->addDebitAccount(currentDebitAccount);
             }
         }
@@ -40,9 +45,10 @@ void deserialize(const std::string& fileName, PaymentService* paymentService) {
         if (c1.key() == "creditAccounts") {
             for (int i = 0; i < c1.value().size(); i++) {
                 CreditAccount currentCreditAccount(
-                    j["creditAccounts"][i]["id"].get<int>(),
+                    j["creditAccounts"][i]["uid"].get<int>(),
                     j["creditAccounts"][i]["currency"].get<std::string>(),
                     j["creditAccounts"][i]["amount"].get<double>(),
+                    j["creditAccounts"][i]["status"].get<std::string>(),
                     j["creditAccounts"][i]["loanRate"].get<double>()
                 );
                 paymentService->addCreditAccount(currentCreditAccount);
@@ -82,10 +88,11 @@ void deserialize(const std::string& fileName, PaymentService* paymentService) {
                 paymentService->addStaff(currentStaff);
             }
         }
+        //return 0;
 
     }
     catch (const std::exception& e) {
         std::cout << "Bad file " << e.what() << '\n';
     }
-
+    return true;
 }

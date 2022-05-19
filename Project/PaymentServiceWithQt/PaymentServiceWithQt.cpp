@@ -1,9 +1,5 @@
 #include "PaymentServiceWithQt.h"
-#include "../MoneyTransferApp/controller.h"
-#include "ClientForm.h"
-#include "StaffForm.h"
-#include "database.h"
-#include "constants.h"
+
 
 PaymentServiceWithQt::PaymentServiceWithQt(QWidget *parent)
     : QMainWindow(parent)
@@ -16,7 +12,6 @@ PaymentServiceWithQt::PaymentServiceWithQt(QWidget *parent)
     connect(ui.pb_staffSignIn, SIGNAL(clicked()), this, SLOT(onClickSignInStaff()));
 
     ui.l_clientSignInError->setVisible(false);
-    //ui.l_clientSignInError->setText(QString::fromStdString("c:" + PaymentService::getInstance()->getClients().size()));
     ui.l_clientSignUpError->setVisible(false);
     ui.l_staffSignInError->setVisible(false);
 
@@ -47,10 +42,11 @@ void PaymentServiceWithQt::onClickSignInClient() {
     QString login = ui.le_clientSignInLogin->text();
     QString password = ui.le_clientSignInPassword->text();
 
-    if (signInClient(login.toStdString(), password.toStdString())) {
-        ClientForm* clientForm = new ClientForm();
+    
+    Client* currentUser = signInClient(login.toStdString(), password.toStdString());
+    if (currentUser != nullptr) {
+        clientForm = new ClientForm(this, currentUser);
         clientForm->show();
-        close();//this will disappear main window
     }
     else {
         ui.l_clientSignInError->setVisible(true);
@@ -63,11 +59,10 @@ void PaymentServiceWithQt::onClickSignInStaff() {
     QString login = ui.le_staffSignInLogin->text();
     QString password = ui.le_staffSignInPassword->text();
 
-    if (signInStaff(login.toStdString(),password.toStdString())) {
-
-        StaffForm* staffForm = new StaffForm();
+    Staff* admin = signInStaff(login.toStdString(), password.toStdString());
+    if (admin != nullptr) {
+        StaffForm* staffForm = new StaffForm(this, admin);
         staffForm->show();
-        close();//this will disappear main window
     }
     else {
         ui.l_staffSignInError->setVisible(true);

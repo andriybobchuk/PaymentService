@@ -1,6 +1,11 @@
 #include "DebitAccount.h"
 
-DebitAccount::DebitAccount(int id, std::string currency, double amount, double depositRate) : BaseAccount(id, currency, amount) {
+DebitAccount::DebitAccount(
+    int uid,
+    std::string currency,
+    double amount,
+    std::string status,
+    double depositRate) : BaseAccount(uid, currency, amount, status) {
     mDepositRate = depositRate;
 }
 
@@ -10,10 +15,11 @@ double DebitAccount::getDepositRate() {
 
 std::ostream& operator<<(std::ostream& os, DebitAccount& debitAccount) {
     os
-        << "{\"id\":" << debitAccount.getId()
+        << "{\"uid\":" << debitAccount.getUid()
         << ",\"currency\":\"" << debitAccount.getCurrency()
         << "\",\"amount\":" << debitAccount.getAmount()
-        << ",\"depositRate\":" << debitAccount.getDepositRate()
+        << ",\"status\":\"" << debitAccount.getStatus()
+        << "\",\"depositRate\":" << debitAccount.getDepositRate()
         << "}";
     return os;
 }

@@ -4,6 +4,7 @@
 
 #include "util.h"
 #include "PaymentService.h"
+#include <random>
 
 
 bool isPasswordSecure(std::string password) {
@@ -79,4 +80,13 @@ bool isAccessCodeValid(std::string accessCode) {
         return true;
     }
     return true;
+}
+
+int getRandomUid()
+{
+    std::random_device dev;
+    std::mt19937 rng(dev());
+    std::uniform_int_distribution<std::mt19937::result_type> dist6(1000, 9999); // distribution in range [1000, 9999]
+
+    return dist6(rng);
 }

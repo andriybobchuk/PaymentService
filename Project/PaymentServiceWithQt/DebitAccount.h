@@ -11,10 +11,12 @@ public:
 	void setDepositRate(double mDepositRate);
 
 	DebitAccount(
-		int id,
+		int uid,
 		std::string currency,
 		double amount,
+		std::string status,
 		double depositRate
+		
 	);
 
 	double getDepositRate();

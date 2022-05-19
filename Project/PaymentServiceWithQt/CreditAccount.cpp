@@ -1,6 +1,12 @@
 #include "CreditAccount.h"
 
-CreditAccount::CreditAccount(int id, std::string currency, double amount, double loanRate) : BaseAccount(id, currency, amount) {
+CreditAccount::CreditAccount(
+    int uid, 
+    std::string currency, 
+    double amount, 
+    std::string status,
+    double loanRate
+) : BaseAccount(uid, currency, amount, status) {
     mLoanRate = loanRate;
 }
 
@@ -14,10 +20,11 @@ void CreditAccount::setLoanRate(double mLoanRate) {
 
 std::ostream& operator<<(std::ostream& os, CreditAccount& creditAccount) {
     os
-        << "{\"id\":" << creditAccount.getId()
+        << "{\"uid\":" << creditAccount.getUid()
         << ",\"currency\":\"" << creditAccount.getCurrency()
         << "\",\"amount\":" << creditAccount.getAmount()
-        << ",\"depositRate\":" << creditAccount.getLoanRate()
+        << ",\"status\":\"" << creditAccount.getStatus()
+        << "\",\"loanRate\":" << creditAccount.getLoanRate()
         << "}";
     return os;
 }

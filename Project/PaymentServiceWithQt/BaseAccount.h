@@ -4,13 +4,16 @@
 
 class BaseAccount {
 
-	int mId;
+	int mUid;
 	std::string mCurrency;
 	double mAmount;
-public:
-	int getId() const;
+	std::string mStatus;
 
-	void setId(int mId);
+public:
+
+	const int getUid() const;
+
+	void setUid(const int mUid);
 
 	const std::string& getCurrency() const;
 
@@ -20,10 +23,17 @@ public:
 
 	void setAmount(double mAmount);
 
-public:
-	BaseAccount(int id, std::string currency, double amount);
+	std::string getStatus() const;
 
-	[[nodiscard]] int getId();
+	void setStatus(const std::string& mStatus);
+
+public:
+	BaseAccount(
+		int uid, 
+		std::string currency, 
+		double amount, 
+		std::string status
+	);
 
 	std::string getCurrency();
 

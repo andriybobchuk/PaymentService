@@ -1,6 +1,8 @@
 #include "Client.h"
 #include "constants.h"
 
+Client::Client() = default;
+
 Client::Client(
     std::string username, 
     std::string password, 
@@ -34,9 +36,12 @@ Client::Client(
 }
 
 // move assignment
-//Client& Client::operator=(Client&& other) noexcept
+//Client& Client::operator=(Client&& other)
 //{
-//    mStatus = std::move(other.getStatus());
+//    //setUsername(std::move(other.getUsername()));
+//    //setEmail(std::move(other.getEmail()));
+//    //setPassword(std::move(other.getPassword()));
+//    mStatus = other.getStatus();
 //    mDebitAccounts = std::move(other.getDebitAccounts());
 //    mCreditAccounts = std::move(other.getCreditAccounts());
 //    return *this;
@@ -65,6 +70,29 @@ std::vector<int>& Client::getCreditAccounts() {
 void Client::setCreditAccounts(const std::vector<int>& mCreditAccounts) {
     Client::mCreditAccounts = mCreditAccounts;
 }
+
+
+
+
+int Client::getDebitAccount(int uid) {
+    return mDebitAccounts.at(uid);
+}
+
+void Client::addDebitAccount(int uid) {
+    Client::mDebitAccounts.push_back(uid);
+}
+
+int Client::getCreditAccount(int uid) {
+    return mCreditAccounts.at(uid);
+}
+
+void Client::addCreditAccount(int uid) {
+    Client::mCreditAccounts.push_back(uid);
+}
+
+
+
+
 
 std::ostream& operator<<(std::ostream& os, Client& client) {
     os

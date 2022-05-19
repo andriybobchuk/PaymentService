@@ -1,5 +1,7 @@
 #include "Staff.h"
 
+Staff::Staff() = default;
+
 Staff::Staff(
     std::string username, 
     std::string password, 

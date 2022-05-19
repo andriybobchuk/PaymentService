@@ -9,9 +9,10 @@ class CreditAccount : public BaseAccount {
 public:
 
 	CreditAccount(
-		int id,
+		int uid,
 		std::string currency,
 		double amount,
+		std::string status,
 		double loanRate
 	);
 
