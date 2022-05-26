@@ -1,8 +1,9 @@
 #include "ClientForm.h"
 
 
-ClientForm::ClientForm(QWidget *parent, Client* currentUser)
-	: QDialog(parent), mCurrentUser(currentUser) {
+ClientForm::ClientForm(QWidget *parent, ClientController* clientController)
+	: QDialog(parent), mClientController(clientController) {
+
 	ui.setupUi(this);
 	this->setFixedSize(QSize(1011, 511));
 	parentWidget()->hide();
@@ -40,19 +41,19 @@ void ClientForm::registerAccount() {
 
 	ui.l_message->setVisible(true);
 
-	if (type.toStdString() == DEBIT_ACCOUNT) {
-		if (createDebitAccount(currency.toStdString(),amount.toDouble(),mCurrentUser)) {
-			ui.l_message->setText("Sent for approval");
-		} else {
-			ui.l_message->setText("Try again");
-		}
-	} else if (type.toStdString() == CREDIT_ACCOUNT) {
-		if (createCreditAccount(currency.toStdString(),amount.toDouble(),mCurrentUser)) {
-			ui.l_message->setText("Sent for approval");
-		} else {
-			ui.l_message->setText("Try again");
-		}
-	}
+	//if (type.toStdString() == DEBIT_ACCOUNT) {
+	//	if (createDebitAccount(currency.toStdString(),amount.toDouble(),mCurrentUser)) {
+	//		ui.l_message->setText("Sent for approval");
+	//	} else {
+	//		ui.l_message->setText("Try again");
+	//	}
+	//} else if (type.toStdString() == CREDIT_ACCOUNT) {
+	//	if (createCreditAccount(currency.toStdString(),amount.toDouble(),mCurrentUser)) {
+	//		ui.l_message->setText("Sent for approval");
+	//	} else {
+	//		ui.l_message->setText("Try again");
+	//	}
+	//}
 }
 
 
@@ -62,13 +63,13 @@ void ClientForm::setupAccountTable() {
 	ui.tableWidget->setRowCount(0);
 
 	int it = 0;
-	for (auto& debitAccount : PaymentService::getInstance()->getDebitAccounts()) {
-		ui.tableWidget->insertRow(it);
-		ui.tableWidget->setItem(it, 0, new QTableWidgetItem(QString::number(debitAccount.getUid())));
-		ui.tableWidget->setItem(it, 1, new QTableWidgetItem(QString::fromStdString(DEBIT_ACCOUNT)));
-		ui.tableWidget->setItem(it, 2, new QTableWidgetItem(QString::fromStdString(debitAccount.getCurrency() + " ") + QString::number(debitAccount.getAmount())));
-		it++;
-	}
+	//for (auto& debitAccount : PaymentService::getInstance()->getDebitAccounts()) {
+	//	ui.tableWidget->insertRow(it);
+	//	ui.tableWidget->setItem(it, 0, new QTableWidgetItem(QString::number(debitAccount.getUid())));
+	//	ui.tableWidget->setItem(it, 1, new QTableWidgetItem(QString::fromStdString(DEBIT_ACCOUNT)));
+	//	ui.tableWidget->setItem(it, 2, new QTableWidgetItem(QString::fromStdString(debitAccount.getCurrency() + " ") + QString::number(debitAccount.getAmount())));
+	//	it++;
+	//}
 }
 
 void ClientForm::setupSettingsTab() {
@@ -77,13 +78,13 @@ void ClientForm::setupSettingsTab() {
 	connect(ui.pb_logOut, SIGNAL(clicked()), this, SLOT(logOut()));
 
 	// Populate Ui with the data about the current user
-	ui.l_userUsername->setText(QString::fromStdString("Username: " + mCurrentUser->getUsername()));
-	ui.l_userEmail->setText(QString::fromStdString("Email: " + mCurrentUser->getEmail()));
+	//ui.l_userUsername->setText(QString::fromStdString("Username: " + mCurrentUser->getUsername()));
+//	ui.l_userEmail->setText(QString::fromStdString("Email: " + mCurrentUser->getEmail()));
 }
 
 void ClientForm::logOut() {
 
-	safelyEndSession(); // Save chnages to the database file
+	save(); // Save chnages to the database file
 	parentWidget()->show();
 	close();
 }

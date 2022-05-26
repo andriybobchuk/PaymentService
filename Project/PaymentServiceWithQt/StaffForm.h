@@ -4,22 +4,24 @@
 #include "ui_StaffForm.h"
 #include <QDialog.h>
 #include <QHeaderView>
-#include "PaymentServiceWithQt.h"
 #include <QHBoxLayout>
+
+#include "StaffController.h"
 #include "constants.h"
+#include "util.h"
+
 
 class StaffForm : public QDialog
 {
 	Q_OBJECT
 
 public:
-	StaffForm(QWidget* parent = Q_NULLPTR, Staff* admin = nullptr);
+	StaffForm(QWidget* parent = Q_NULLPTR, StaffController* staffController = nullptr);
 	~StaffForm();
-
-	Staff* mAdmin;
 
 private:
 	Ui::StaffForm ui;
+	StaffController* mStaffController;
 
 private slots:
 	void approveById(int id);

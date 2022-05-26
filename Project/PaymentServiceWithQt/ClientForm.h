@@ -1,10 +1,12 @@
 #pragma once
 
 #include <QWidget>
-#include "ui_ClientForm.h"
-#include "controller.h"
-#include "BaseUser.h"
 #include <QDialog.h>
+#include "ui_ClientForm.h"
+
+#include "ClientController.h"
+#include "constants.h"
+#include "util.h"
 
 
 class ClientForm : public QDialog
@@ -12,10 +14,10 @@ class ClientForm : public QDialog
 	Q_OBJECT
 
 public:
-	ClientForm(QWidget *parent = Q_NULLPTR, Client* currentUser = nullptr);
+	ClientForm(QWidget *parent = Q_NULLPTR, ClientController* clientController = nullptr);
 	~ClientForm();
 
-	Client* mCurrentUser;
+	ClientController* mClientController;
 	
 private:
 	Ui::ClientForm ui;

@@ -85,8 +85,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ClientController.cpp" />
     <ClCompile Include="ClientForm.cpp" />
+    <ClCompile Include="EntryController.cpp" />
     <ClCompile Include="Staff.cpp" />
+    <ClCompile Include="StaffController.cpp" />
     <ClCompile Include="StaffForm.cpp" />
     <ClCompile Include="util.cpp" />
     <QtRcc Include="PaymentServiceWithQt.qrc" />
@@ -110,15 +113,18 @@
     <ClInclude Include="BaseUser.h" />
     <ClInclude Include="Client.h" />
     <QtMoc Include="ClientForm.h" />
+    <ClInclude Include="ClientController.h" />
     <ClInclude Include="constants.h" />
     <ClInclude Include="controller.h" />
     <ClInclude Include="CreditAccount.h" />
     <ClInclude Include="database.h" />
     <ClInclude Include="DebitAccount.h" />
+    <ClInclude Include="EntryController.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="PaymentService.h" />
     <ClInclude Include="Staff.h" />
     <QtMoc Include="StaffForm.h" />
+    <ClInclude Include="StaffController.h" />
     <ClInclude Include="util.h" />
   </ItemGroup>
   <ItemGroup>

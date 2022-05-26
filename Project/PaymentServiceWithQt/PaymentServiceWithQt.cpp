@@ -5,6 +5,7 @@ PaymentServiceWithQt::PaymentServiceWithQt(QWidget *parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+    mEntryController = new EntryController(this);
 
     ui.pb_clientSignUp->setAutoDefault(false);
     connect(ui.pb_clientSignUp, SIGNAL(clicked()), this, SLOT(onClickSignUpClient()));
@@ -23,7 +24,8 @@ void PaymentServiceWithQt::onClickSignUpClient() {
     QString email = ui.le_clientSignUpEmail->text();
 
 
-    if (signUp(
+    // Now controller takes care of it and tells if registartion went successful.
+    if (mEntryController->signUpClient(
         username.toStdString(), 
         password.toStdString(), 
         email.toStdString())) {
@@ -42,16 +44,9 @@ void PaymentServiceWithQt::onClickSignInClient() {
     QString login = ui.le_clientSignInLogin->text();
     QString password = ui.le_clientSignInPassword->text();
 
-    
-    Client* currentUser = signInClient(login.toStdString(), password.toStdString());
-    if (currentUser != nullptr) {
-        clientForm = new ClientForm(this, currentUser);
-        clientForm->show();
-    }
-    else {
+    if (!mEntryController->signInClient(login.toStdString(), password.toStdString())) {
         ui.l_clientSignInError->setVisible(true);
     }
-    
 }
 
 
@@ -59,12 +54,7 @@ void PaymentServiceWithQt::onClickSignInStaff() {
     QString login = ui.le_staffSignInLogin->text();
     QString password = ui.le_staffSignInPassword->text();
 
-    Staff* admin = signInStaff(login.toStdString(), password.toStdString());
-    if (admin != nullptr) {
-        StaffForm* staffForm = new StaffForm(this, admin);
-        staffForm->show();
-    }
-    else {
+    if (!mEntryController->signInStaff(login.toStdString(), password.toStdString())) {
         ui.l_staffSignInError->setVisible(true);
     }
 }

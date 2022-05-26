@@ -1,8 +1,9 @@
 #include "StaffForm.h"
 
 
-StaffForm::StaffForm(QWidget *parent, Staff* admin) :
-    QDialog(parent), mAdmin(admin) {
+StaffForm::StaffForm(QWidget *parent, StaffController* staffController) :
+    QDialog(parent), mStaffController(staffController) {
+
 	ui.setupUi(this);
 	this->setFixedSize(QSize(811, 511));
 	parentWidget()->hide();
@@ -17,12 +18,12 @@ StaffForm::~StaffForm()
 }
 
 void StaffForm::approveById(int id) {
-	approveClientById(id); // Kindly ask controller.cpp to change the database
+	//approveClientById(id); // Kindly ask controller.cpp to change the database
 	setupAccountTable();
 }
 
 void StaffForm::banById(int id) {
-	banClientById(id); // Kindly ask controller.cpp to change the database
+	//banClientById(id); // Kindly ask controller.cpp to change the database
 	setupAccountTable();
 }
 
@@ -34,13 +35,13 @@ void StaffForm::setupActionButton(int it) {
 	pb_action->setObjectName("pb_action"); // Layout id
 
 	// Todo: You shouldn't access the model through view
-	if (PaymentService::getInstance()->getClients().at(it).getStatus() == APPROVED) {
+	/*if (PaymentService::getInstance()->getClients().at(it).getStatus() == APPROVED) {
 		pb_action->setText("Ban");
 		pb_action->setStyleSheet("#pb_action {\nborder-style: outset;\nborder-radius: 10px;\nborder-color:#000000;\nborder-width: 1px;\nmin-width: 5em;\nfont: bold 12px;\npadding: 3px;\nbackground-color: #000000;\ncolor: #FFFFFF}");
 	} else {
 		pb_action->setText("Approve");
 		pb_action->setStyleSheet("#pb_action {\nborder-style: outset;\nborder-radius: 10px;\nborder-color:#000000;\nborder-width: 1px;\nmin-width: 5em;\nfont: bold 12px;\npadding: 3px;\nbackground-color: #FFFFFF;\ncolor: #000000}");
-	}
+	}*/
 
 	// Is it dead code??
 	QHBoxLayout* pLayout = new QHBoxLayout(pWidget);
@@ -69,7 +70,7 @@ void StaffForm::setupAccountTable() {
 
 	int it = 0;
 	// Todo: You shouldn't access the model through view
-	for (auto& client : PaymentService::getInstance()->getClients()) {
+	/*for (auto& client : PaymentService::getInstance()->getClients()) {
 		ui.tableWidget->insertRow(it);
 		ui.tableWidget->setItem(it, 0, new QTableWidgetItem(QString::fromStdString(client.getUsername())));
 		ui.tableWidget->setItem(it, 1, new QTableWidgetItem(QString::fromStdString(client.getEmail())));
@@ -78,17 +79,17 @@ void StaffForm::setupAccountTable() {
 		setupActionButton(it);
 
 		it++;
-	}
+	}*/
 }
 
 void StaffForm::setupSettingsTab() {
 	connect(ui.pb_logOut, SIGNAL(clicked()), this, SLOT(logOut()));
-	ui.l_user->setText(QString::fromStdString(mAdmin->getEmail()));
+	//ui.l_user->setText(QString::fromStdString(mAdmin->getEmail()));
 }
 
 
 void StaffForm::logOut() {
-	safelyEndSession(); // Save chnages to the database file
+	save(); // Save chnages to the database file
 	parentWidget()->show();
 	close();
 }

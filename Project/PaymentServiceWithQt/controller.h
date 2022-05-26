@@ -29,11 +29,24 @@ Client* signInClient(std::string login, std::string password);
 
 Staff* signInStaff(std::string login, std::string password);
 
+
+
+
+
+
+
+
 void approveClientById(int id);
 
 void banClientById(int id);
 
 Client& getClientFromUsername(std::string username);
+
+
+
+
+
+
 
 // Account management
 
@@ -48,6 +61,11 @@ void approveCreditAccountById(int id);
 void banDebitAccountById(int id);
 
 void banCreditAccountById(int id);
+
+
+
+
+
 
 
 // Other

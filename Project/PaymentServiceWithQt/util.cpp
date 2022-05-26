@@ -3,8 +3,7 @@
 //
 
 #include "util.h"
-#include "PaymentService.h"
-#include <random>
+
 
 
 bool isPasswordSecure(std::string password) {
@@ -78,4 +77,13 @@ int getNewAccountUid() {
     }
 
     return newAccountUid;
+}
+
+
+void save() {
+    serializeToDb(DATABASE_FILE, PaymentService::getInstance());
+}
+
+void read() {
+    deserialize(DATABASE_FILE, PaymentService::getInstance());
 }
