@@ -15,6 +15,47 @@ void PaymentService::setInstance(PaymentService* instance) {
     PaymentService::instance = instance;
 }
 
+
+
+std::vector<std::string>& PaymentService::getReservedEmails()
+{
+    return mReservedEmails;
+}
+
+void PaymentService::setReservedEmails(const std::vector<std::string>& mReservedEmails)
+{
+    PaymentService::mReservedEmails = mReservedEmails;
+}
+
+void PaymentService::addReservedEmail(std::string reservedEmail)
+{
+    mReservedEmails.push_back(reservedEmail);
+}
+
+void PaymentService::removeReservedEmail(std::string reservedEmail)
+{
+    mReservedEmails.erase(
+        std::remove(
+            mReservedEmails.begin(), mReservedEmails.end(), reservedEmail
+        ), mReservedEmails.end()
+    );
+
+}
+
+
+
+std::vector<std::string> PaymentService::getRegisteredEmails()
+{
+    std::vector<std::string> result;
+
+    for (auto client : PaymentService::mClients) {
+        result.push_back(client.getEmail());
+    }
+    return result;
+}
+
+
+
 std::vector<Client>& PaymentService::getClients() {
     return mClients;
 }
@@ -52,6 +93,14 @@ std::ostream& operator<<(std::ostream& os, PaymentService* paymentService) {
     for (int i = 0; i < paymentService->mClients.size(); i++) {
         os << paymentService->mClients.at(i);
         if (i < paymentService->mClients.size() - 1) {
+            os << ",";
+        }
+    }
+    os << "],\"reservedEmails\": [";
+
+    for (int i = 0; i < paymentService->mReservedEmails.size(); i++) {
+        os << "\"" << paymentService->mReservedEmails.at(i) << "\"";
+        if (i < paymentService->mReservedEmails.size() - 1) {
             os << ",";
         }
     }

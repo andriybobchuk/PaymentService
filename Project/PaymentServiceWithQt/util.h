@@ -27,9 +27,20 @@ bool isLoginUnique(std::string username, std::string email);
 int getNewAccountUid();
 
 
-void save();
+void pushToDatabase();
 
-void read();
+void pullFromDatabase();
+
+inline double round(double val);
+
+
+unsigned int stringToHashFunction(std::string string);
+
+std::string unsignedIntToHex(unsigned int input);
+
+std::string passwordToHash(std::string password);
+
+bool comparePasswordToHash(std::string password, std::string hash);
 
 
 #endif //CLIONPROJECTMODEL_UTIL_H

@@ -24,10 +24,18 @@ private:
 	StaffController* mStaffController;
 
 private slots:
-	void approveById(int id);
-	void banById(int id);
-	void setupActionButton(int it);
+
 	void setupAccountTable();
+	void setupUsersActionButton(int id);
+
+
+	void setupUserTable();
+	void setupAccountActionButton(int id);
+
+
 	void logOut();
+
+	void setupUsersListTab();
+	void setupAccountsListTab();
 	void setupSettingsTab();
 };

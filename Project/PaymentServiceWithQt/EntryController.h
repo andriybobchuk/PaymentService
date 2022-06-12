@@ -11,6 +11,7 @@
 
 #include "ClientController.h"
 #include "StaffController.h"
+#include "Reservation.h"
 
 
 class EntryController

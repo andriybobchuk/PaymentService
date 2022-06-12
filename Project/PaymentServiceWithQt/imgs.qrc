@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="prfxa">
+    <file>accbackground.jpg</file>
+    <file>background.jpg</file>
+    <file>favicon.png</file>
+  </qresource>
+</RCC>

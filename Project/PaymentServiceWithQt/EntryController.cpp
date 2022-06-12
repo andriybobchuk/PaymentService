@@ -2,36 +2,47 @@
 
 
 
+
 EntryController::EntryController(QWidget* parent) : mParentWidget(parent)
 {
 }
 
+
+
 bool EntryController::signUpClient(std::string username, std::string password, std::string email) {
 
-    // Todo: clearing the PaymentService here is weird
-    PaymentService::setInstance(0);
-    deserialize(DATABASE_FILE, PaymentService::getInstance());
+    pullFromDatabase(); // Making sure to get the latest saved data
 
-    if (isPasswordSecure(password) && isEmailValid(email) && isLoginUnique(username, email)) {
+    if (Reservation::reserve(email)) {
 
-        PaymentService::getInstance()->addClient(Client(username, password, email));
-        serializeToDb(DATABASE_FILE, PaymentService::getInstance()); //Todo: this is also weird
+        pushToDatabase(); // push a new reserved email, so that while we register a new user no one will interfer
+
+        PaymentService::getInstance()->addClient(Client(username, passwordToHash(password), email)); // Adding a new client
+        
+        Reservation::complete(email);
+
+        pushToDatabase(); // push a db with new registered user and cleared list of reserved users
 
         return true;
     }
+
     return false;
 }
 
 bool EntryController::signInClient(std::string login, std::string password) {
 
-    PaymentService::setInstance(0);
-    read();
-
-    Client* currentLoggedInClient;
+    pullFromDatabase(); // Making sure to get the latest saved data
+    
+    Client* currentLoggedInClient{};
     for (auto& client : PaymentService::getInstance()->getClients()) {
-        if (client.getEmail() == login || client.getUsername() == login
-            && client.getPassword() == password
-            && client.getStatus() == APPROVED) {
+        if (
+            client.getEmail() == login || client.getUsername() == login
+
+            && comparePasswordToHash(password, client.getPassword())
+
+            && client.getStatus() == APPROVED
+            
+            ) {
 
             currentLoggedInClient = &client;
         }
@@ -40,6 +51,9 @@ bool EntryController::signInClient(std::string login, std::string password) {
     if (!currentLoggedInClient) { return false; }
 
     ClientController* clientController = new ClientController(currentLoggedInClient);
+
+
+
     ClientForm* clientForm = new ClientForm(mParentWidget, clientController);
     clientForm->show();
 
@@ -48,13 +62,16 @@ bool EntryController::signInClient(std::string login, std::string password) {
 
 bool EntryController::signInStaff(std::string login, std::string password) {
 
-    PaymentService::setInstance(0);
-    read();
+    pullFromDatabase(); // Making sure to get the latest saved data
 
-    Staff* currentLoggedInStaff;
+    Staff* currentLoggedInStaff{};
     for (auto& staff : PaymentService::getInstance()->getStaff()) {
-        if (staff.getEmail() == login || staff.getUsername() == login
-            && staff.getPassword() == password) {
+        if (
+            staff.getEmail() == login || staff.getUsername() == login
+            
+            && comparePasswordToHash(password, staff.getPassword())
+            
+            ) {
             currentLoggedInStaff = &staff;
         }
     }

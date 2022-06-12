@@ -22,6 +22,7 @@ class PaymentService {
 	PaymentService() = default;
 
 	/* Info about users and accounts. */
+	std::vector<std::string> mReservedEmails;
 	std::vector<Client> mClients;
 	std::vector<Staff> mStaff;
 	std::vector<DebitAccount> mDebitAccounts;
@@ -31,6 +32,20 @@ public:
 
 	/* Static access method. */
 	static PaymentService* getInstance();
+
+	void addReservedEmail(std::string reservedEmail);
+
+	void removeReservedEmail(std::string reservedEmail);
+
+	void setReservedEmails(const std::vector<std::string>& mReservedEmails);
+
+
+
+	std::vector<std::string>& getReservedEmails();
+
+	std::vector<std::string> getRegisteredEmails();
+
+
 
 	void addDebitAccount(DebitAccount debitAccount);
 

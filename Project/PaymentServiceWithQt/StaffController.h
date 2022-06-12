@@ -1,6 +1,11 @@
 #pragma once
 
+#include <string>
 #include "Staff.h"
+#include "PaymentService.h"
+#include "constants.h"
+#include "util.h"
+
 
 class StaffController
 {
@@ -11,5 +16,27 @@ public:
 	StaffController(Staff* currentStaff);
 
 
+
+	std::vector<std::vector<std::string>> getAllUsers();
+
+	bool isClientApproved(int id);
+
+	void approveClientById(int id);
+
+	void banClientById(int id);
+
+
+
+	std::vector<std::vector<std::string>> getAllAccounts();
+
+	bool isAccountApproved(int id);
+
+	void approveAccountById(int id);
+
+	void banAccountById(int id);
+
+
+
+	std::string getCurrentUserEmail();
 };
 

@@ -8,11 +8,17 @@
 #include <string>
 #include "PaymentService.h"
 #include "json.hpp"
-
-void serializeToDb(const std::string& fileName, PaymentService* paymentService);
+#include "constants.h"
 
 using json = nlohmann::json;
 
-bool deserialize(const std::string& fileName, PaymentService* paymentService);
+const std::string FILE_NAME = DATABASE_FILE;
+
+void serialize();
+
+bool deserialize();
+
+
+
 
 #endif //CLIONPROJECTMODEL_DATABASE_H

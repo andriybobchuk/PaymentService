@@ -20,7 +20,7 @@
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -36,7 +36,7 @@
     <QtBuildConfig>debug</QtBuildConfig>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'" Label="QtSettings">
-    <QtInstall>6.2.4</QtInstall>
+    <QtInstall>6.3.0</QtInstall>
     <QtModules>core;gui;widgets</QtModules>
     <QtBuildConfig>release</QtBuildConfig>
   </PropertyGroup>
@@ -85,14 +85,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AccountCreatorDialog.cpp" />
     <ClCompile Include="ClientController.cpp" />
     <ClCompile Include="ClientForm.cpp" />
     <ClCompile Include="EntryController.cpp" />
+    <ClCompile Include="Reservation.cpp" />
     <ClCompile Include="Staff.cpp" />
     <ClCompile Include="StaffController.cpp" />
     <ClCompile Include="StaffForm.cpp" />
     <ClCompile Include="util.cpp" />
     <QtRcc Include="PaymentServiceWithQt.qrc" />
+    <QtUic Include="AccountCreatorDialog.ui" />
     <QtUic Include="ClientForm.ui" />
     <QtUic Include="PaymentServiceWithQt.ui" />
     <QtMoc Include="PaymentServiceWithQt.h" />
@@ -109,6 +112,7 @@
     <QtUic Include="StaffForm.ui" />
   </ItemGroup>
   <ItemGroup>
+    <QtMoc Include="AccountCreatorDialog.h" />
     <ClInclude Include="BaseAccount.h" />
     <ClInclude Include="BaseUser.h" />
     <ClInclude Include="Client.h" />
@@ -122,6 +126,7 @@
     <ClInclude Include="EntryController.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="PaymentService.h" />
+    <ClInclude Include="Reservation.h" />
     <ClInclude Include="Staff.h" />
     <QtMoc Include="StaffForm.h" />
     <ClInclude Include="StaffController.h" />

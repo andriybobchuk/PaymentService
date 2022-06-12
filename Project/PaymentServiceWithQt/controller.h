@@ -11,6 +11,7 @@
 #include "util.h"
 #include "database.h"
 #include "constants.h"
+#include "Reservation.h"
 
 //PaymentService* paymentService = PaymentService::getInstance();
 
@@ -50,9 +51,7 @@ Client& getClientFromUsername(std::string username);
 
 // Account management
 
-bool createDebitAccount(std::string currency, double amount, Client* currentUser);
 
-bool createCreditAccount(std::string currency, double amount, Client* currentUser);
 
 void approveDebitAccountById(int id);
 

@@ -85,6 +85,12 @@
     <ClCompile Include="StaffController.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="AccountCreatorDialog.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Reservation.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BaseAccount.h">
@@ -132,6 +138,9 @@
     <ClInclude Include="StaffController.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Reservation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <QtMoc Include="ClientForm.h">
@@ -140,12 +149,18 @@
     <QtMoc Include="StaffForm.h">
       <Filter>Header Files</Filter>
     </QtMoc>
+    <QtMoc Include="AccountCreatorDialog.h">
+      <Filter>Header Files</Filter>
+    </QtMoc>
   </ItemGroup>
   <ItemGroup>
     <QtUic Include="ClientForm.ui">
       <Filter>Form Files</Filter>
     </QtUic>
     <QtUic Include="StaffForm.ui">
+      <Filter>Form Files</Filter>
+    </QtUic>
+    <QtUic Include="AccountCreatorDialog.ui">
       <Filter>Form Files</Filter>
     </QtUic>
   </ItemGroup>

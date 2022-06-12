@@ -6,6 +6,7 @@
 
 
 
+
 bool isPasswordSecure(std::string password) {
 
 
@@ -80,10 +81,56 @@ int getNewAccountUid() {
 }
 
 
-void save() {
-    serializeToDb(DATABASE_FILE, PaymentService::getInstance());
+void pushToDatabase() {
+    serialize();
 }
 
-void read() {
-    deserialize(DATABASE_FILE, PaymentService::getInstance());
+void pullFromDatabase() {
+    PaymentService::setInstance(0); // zeroing the previous instance not to have a double data
+    deserialize();
 }
+
+inline double round(double val)
+{
+    if (val < 0) return ceil(val - 0.5);
+    return floor(val + 0.5);
+}
+
+
+unsigned int stringToHashFunction(std::string string) {
+
+    unsigned int init = 156754;
+    unsigned int multiplier = 987655;
+    unsigned int hash = init;
+
+    for (int i = 0; i < string.length(); i++) {
+        hash = hash ^ (string[i]); // XOR each byte of string
+        hash = hash * multiplier;
+    }
+    return hash;
+}
+
+
+std::string unsignedIntToHex(unsigned int input) {
+    std::string hexHash;
+    std::stringstream sstream;
+    sstream << std::hex << input;
+    hexHash = sstream.str();
+    std::transform(hexHash.begin(), hexHash.end(), hexHash.begin(), ::toupper);
+    return hexHash;
+}
+
+
+std::string passwordToHash(std::string password) {
+    return unsignedIntToHex(stringToHashFunction(password));
+}
+
+
+bool comparePasswordToHash(std::string password, std::string hash) {
+    if (passwordToHash(password) == hash) {
+        return true;
+    }
+    return false;
+}
+
+

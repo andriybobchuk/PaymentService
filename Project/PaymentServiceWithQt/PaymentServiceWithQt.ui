@@ -44,7 +44,7 @@ background-color: #F8F8F8
     <widget class="QWidget" name="clientTab">
      <property name="styleSheet">
       <string notr="true">#clientTab {
-background: #F8F8F8
+border-image: url(E:/Documents/cpp_projects/polsl-aei-cp4-ang/2d98c560-gr12-repo/Project/PaymentServiceWithQt/background.jpg) 0 0 0 0 stretch stretch;
 }</string>
      </property>
      <attribute name="title">
@@ -56,7 +56,7 @@ background: #F8F8F8
         <x>100</x>
         <y>70</y>
         <width>271</width>
-        <height>341</height>
+        <height>351</height>
        </rect>
       </property>
       <property name="autoFillBackground">
@@ -64,7 +64,10 @@ background: #F8F8F8
       </property>
       <property name="styleSheet">
        <string notr="true">#widget {
-background: #FFFFFF
+background: #FFFFFF;
+border: 1px solid;
+border-color: #f3f3f3;
+border-radius:15px;
 }</string>
       </property>
       <widget class="QPushButton" name="pb_clientSignIn">
@@ -83,7 +86,7 @@ background: #FFFFFF
        </property>
        <property name="styleSheet">
         <string notr="true">#pb_clientSignIn {
-border-radius: 25px;
+border-radius: 12px;
 background-color: #000000;
 color: #FFFFFF
 }</string>
@@ -249,12 +252,15 @@ color: #FFFFFF
         <x>390</x>
         <y>70</y>
         <width>271</width>
-        <height>391</height>
+        <height>401</height>
        </rect>
       </property>
       <property name="styleSheet">
        <string notr="true">#widget_2 {
-background: #FFFFFF
+background: #FFFFFF;
+border: 1px solid;
+border-color: #f3f3f3;
+border-radius:15px;
 }</string>
       </property>
       <widget class="QPushButton" name="pb_clientSignUp">
@@ -273,7 +279,7 @@ background: #FFFFFF
        </property>
        <property name="styleSheet">
         <string notr="true">#pb_clientSignUp {
-border-radius: 25px;
+border-radius: 12px;
 background-color: #000000;
 color: #FFFFFF
 }</string>
@@ -479,11 +485,32 @@ color: #FFFFFF
        </property>
       </widget>
      </widget>
+     <widget class="QLabel" name="label_8">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>500</y>
+        <width>761</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Light</family>
+       </font>
+      </property>
+      <property name="text">
+       <string>GoFinance © 2022 by Andriy Bobchuk</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="staffTab">
      <property name="styleSheet">
       <string notr="true">#staffTab {
-background-color: #F8F8F8
+border-image: url(E:/Documents/cpp_projects/polsl-aei-cp4-ang/2d98c560-gr12-repo/Project/PaymentServiceWithQt/background.jpg) 0 0 0 0 stretch stretch;
 }</string>
      </property>
      <attribute name="title">
@@ -500,7 +527,10 @@ background-color: #F8F8F8
       </property>
       <property name="styleSheet">
        <string notr="true">#widget_3 {
-background: #FFFFFF
+background: #FFFFFF;
+border: 1px solid;
+border-color: #f3f3f3;
+border-radius:15px;
 }</string>
       </property>
       <widget class="QPushButton" name="pb_staffSignIn">
@@ -519,6 +549,7 @@ background: #FFFFFF
        </property>
        <property name="styleSheet">
         <string notr="true">#pb_staffSignIn {
+border-radius: 12px;
 background: #000000;
 color: #FFFFFF
 }</string>
@@ -675,6 +706,27 @@ color: #FFFFFF
        </property>
       </widget>
      </widget>
+     <widget class="QLabel" name="label_7">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>500</y>
+        <width>761</width>
+        <height>20</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Light</family>
+       </font>
+      </property>
+      <property name="text">
+       <string>GoFinance © 2022 by Andriy Bobchuk</string>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignCenter</set>
+      </property>
+     </widget>
     </widget>
    </widget>
   </widget>
@@ -682,6 +734,7 @@ color: #FFFFFF
  <layoutdefault spacing="6" margin="11"/>
  <resources>
   <include location="PaymentServiceWithQt.qrc"/>
+  <include location="imgs.qrc"/>
  </resources>
  <connections/>
 </ui>

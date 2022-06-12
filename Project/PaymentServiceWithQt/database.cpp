@@ -3,18 +3,18 @@
 #include "PaymentService.h"
 #include "json.hpp"
 
-void serializeToDb(const std::string& fileName, PaymentService* paymentService) {
+void serialize() {
     std::ofstream outputFile;
-    outputFile.open(fileName);
-    outputFile << paymentService;
+    outputFile.open(FILE_NAME);
+    outputFile << PaymentService::getInstance();
     outputFile.close();
 }
 
 using json = nlohmann::json;
 
-bool deserialize(const std::string& fileName, PaymentService* paymentService) {
+bool deserialize() {
 
-    std::ifstream inputFileStream(fileName);
+    std::ifstream inputFileStream(FILE_NAME);
     std::stringstream bufferStringStream;
     bufferStringStream << inputFileStream.rdbuf();
     std::string fileAsString = bufferStringStream.str();
@@ -37,7 +37,7 @@ bool deserialize(const std::string& fileName, PaymentService* paymentService) {
                 );
                 if (currentDebitAccount.getUid() == 0) {
                 }
-                paymentService->addDebitAccount(currentDebitAccount);
+                PaymentService::getInstance()->addDebitAccount(currentDebitAccount);
             }
         }
 
@@ -51,7 +51,7 @@ bool deserialize(const std::string& fileName, PaymentService* paymentService) {
                     j["creditAccounts"][i]["status"].get<std::string>(),
                     j["creditAccounts"][i]["loanRate"].get<double>()
                 );
-                paymentService->addCreditAccount(currentCreditAccount);
+                PaymentService::getInstance()->addCreditAccount(currentCreditAccount);
             }
         }
 
@@ -69,7 +69,7 @@ bool deserialize(const std::string& fileName, PaymentService* paymentService) {
                 j["clients"][i]["debitAccounts"].get_to<std::vector<int>>(currentClient.getDebitAccounts());
                 j["clients"][i]["creditAccounts"].get_to<std::vector<int>>(currentClient.getCreditAccounts());
 
-                paymentService->addClient(currentClient);
+                PaymentService::getInstance()->addClient(currentClient);
             }
         }
 
@@ -85,7 +85,16 @@ bool deserialize(const std::string& fileName, PaymentService* paymentService) {
                     j["staff"][i]["position"].get<std::string>()
                 );
 
-                paymentService->addStaff(currentStaff);
+                PaymentService::getInstance()->addStaff(currentStaff);
+            }
+        }
+
+        nlohmann::json::iterator c4 = j.find("reservedEmails");
+        if (c4.key() == "reservedEmails") {
+
+            for (int i = 0; i < c4.value().size(); i++) {
+
+                PaymentService::getInstance()->addReservedEmail(j["reservedEmails"][i].get<std::string>());
             }
         }
         //return 0;
@@ -96,3 +105,4 @@ bool deserialize(const std::string& fileName, PaymentService* paymentService) {
     }
     return true;
 }
+

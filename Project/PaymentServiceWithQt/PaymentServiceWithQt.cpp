@@ -23,19 +23,34 @@ void PaymentServiceWithQt::onClickSignUpClient() {
     QString password = ui.le_clientSignUpPassword->text();
     QString email = ui.le_clientSignUpEmail->text();
 
+    ui.l_clientSignUpError->setVisible(true);
 
-    // Now controller takes care of it and tells if registartion went successful.
-    if (mEntryController->signUpClient(
-        username.toStdString(), 
-        password.toStdString(), 
-        email.toStdString())) {
+    if (
+        isPasswordSecure(password.toStdString())
+        && isEmailValid(email.toStdString())
+        ) {
 
-        ui.l_clientSignUpError->setVisible(true);
-        ui.l_clientSignUpError->setText("Success, now wait for the approval.");
+        // Actual registering of a client
+        if (!mEntryController->signUpClient(
+            username.toStdString(),
+            password.toStdString(),
+            email.toStdString())) {
+            ui.l_clientSignUpError->setText("Account with this email exists!");
+        }
+        else {
+            // Clearing edit text fields
+            ui.le_clientSignUpUsername->clear();
+            ui.le_clientSignUpPassword->clear();
+            ui.le_clientSignUpEmail->clear();
 
-    } else {
-        ui.l_clientSignUpError->setVisible(true);
-        ui.l_clientSignUpError->setText("Unappropriate email or password!");
+            ui.l_clientSignUpError->setText("Success, now wait for the approval.");
+        }
+    }
+    else if (!isPasswordSecure(password.toStdString())) {
+        ui.l_clientSignUpError->setText("Your password isn't secure!");
+    }
+    else if (!isEmailValid(email.toStdString())) {
+        ui.l_clientSignUpError->setText("Invalid email address!");
     }
 }
 
@@ -44,7 +59,13 @@ void PaymentServiceWithQt::onClickSignInClient() {
     QString login = ui.le_clientSignInLogin->text();
     QString password = ui.le_clientSignInPassword->text();
 
-    if (!mEntryController->signInClient(login.toStdString(), password.toStdString())) {
+    if (mEntryController->signInClient(login.toStdString(), password.toStdString())) {
+        
+        // Clearing edit text fields
+        ui.le_clientSignInLogin->clear();
+        ui.le_clientSignInPassword->clear();
+    }
+    else {
         ui.l_clientSignInError->setVisible(true);
     }
 }
@@ -54,7 +75,13 @@ void PaymentServiceWithQt::onClickSignInStaff() {
     QString login = ui.le_staffSignInLogin->text();
     QString password = ui.le_staffSignInPassword->text();
 
-    if (!mEntryController->signInStaff(login.toStdString(), password.toStdString())) {
+    if (mEntryController->signInStaff(login.toStdString(), password.toStdString())) {
+
+        // Clearing edit text fields
+        ui.le_staffSignInLogin->clear();
+        ui.le_staffSignInPassword->clear();
+    }
+    else {
         ui.l_staffSignInError->setVisible(true);
     }
 }
