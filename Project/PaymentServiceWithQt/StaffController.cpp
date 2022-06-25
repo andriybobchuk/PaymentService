@@ -1,6 +1,7 @@
 #include "StaffController.h"
 
 
+
 StaffController::StaffController(Staff* currentStaff) : mCurrentStaff(currentStaff) {}
 
 
@@ -27,9 +28,9 @@ std::vector<std::vector<std::string>> StaffController::getAllUsers() {
 
 		it++;
 	}
-
 	return users;
 }
+
 
 bool StaffController::isClientApproved(int id) {
 	if (PaymentService::getInstance()->getClients().at(id).getStatus() == APPROVED) {
@@ -38,14 +39,13 @@ bool StaffController::isClientApproved(int id) {
 	return false;
 }
 
-void StaffController::approveClientById(int id) {
-	PaymentService::getInstance()->getClients().at(id).setStatus(APPROVED);
-}
 
-void StaffController::banClientById(int id) {
-	PaymentService::getInstance()->getClients().at(id).setStatus(BANNED);
-}
+void StaffController::changeClientStatus(int clientId, std::string newStatus) {
 
+	PaymentService::getInstance()->getClients().at(clientId).setStatus(newStatus);
+	// IMPORTANT!
+	pushToDatabase();
+}
 
 
 /* =========================================================================================================== *
@@ -54,59 +54,59 @@ void StaffController::banClientById(int id) {
 
 std::vector<std::vector<std::string>> StaffController::getAllAccounts() {
 
-	std::vector<std::vector<std::string>> accounts;
+	std::vector<std::variant<DebitAccount,CreditAccount>> accounts;
+	std::vector<std::vector<std::string>> result;
 
-	int it = 0;
 	for (auto& account : PaymentService::getInstance()->getDebitAccounts()) {
-
-		accounts.push_back(
-			{
-				std::to_string(it),
-				std::to_string(account.getUid()),
-				account.getCurrency(),
-				std::to_string(round(account.getAmount() * 100.0) / 100.0),
-				DEBIT_ACCOUNT,
-				std::to_string(round(account.getDepositRate() * 100.0) / 100.0),
-				account.getStatus(),
-			}
-		);
-
-		it++;
+		accounts.push_back(account);
 	}
-	//for (auto& account : PaymentService::getInstance()->getCreditAccounts()) {
 
-	//	accounts.push_back(
-	//		{
-	//			std::to_string(it),
-	//			std::to_string(account.getUid()),
-	//			account.getCurrency(),
-	//			std::to_string(account.getAmount()),
-	//			account.getStatus(),
-	//			std::to_string(account.getLoanRate())
-	//		}
-	//	);
+	for (auto& account : PaymentService::getInstance()->getCreditAccounts()) {
+		accounts.push_back(account);
+	}
 
-	//	it++;
-	//}
+	for (auto& account : accounts) {
+		std::visit([&result](auto& object) { 
 
-	return accounts;
-}
+			result.push_back(object.toStringVector());
 
-void StaffController::approveAccountById(int id) {
+		}, account);
+	}
 
-	// to be implemented
-
-	//PaymentService::getInstance()->getClients().at(id).setStatus(APPROVED);
-}
-
-void StaffController::banAccountById(int id) {
-
-	// to be implemented
-
-	//PaymentService::getInstance()->getClients().at(id).setStatus(BANNED);
+	return result;
 }
 
 
+bool StaffController::isAccountApproved(int id) {
+	if (getAllAccounts()[id][4] == APPROVED) {
+		return true;
+	}
+	return false;
+}
+
+
+void StaffController::changeAccountStatus(int accountId, std::string newStatus) {
+
+	if (getAllAccounts()[accountId][3] == DEBIT_ACCOUNT) {
+
+		for (auto& account : PaymentService::getInstance()->getDebitAccounts()) {
+			if (std::to_string(account.getUid()) == getAllAccounts()[accountId][0]) {
+				account.setStatus(newStatus);
+			}
+		}
+	}
+	else {
+		for (auto& account : PaymentService::getInstance()->getCreditAccounts()) {
+			if (std::to_string(account.getUid()) == getAllAccounts()[accountId][0]) {
+				account.setStatus(newStatus);
+			}
+		}
+	}
+
+	// IMPORTANT!
+	pushToDatabase();
+
+}
 
 
 /* =========================================================================================================== *

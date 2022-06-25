@@ -67,11 +67,11 @@ border-radius:15px;
      <enum>Qt::Horizontal</enum>
     </property>
    </widget>
-   <widget class="QPushButton" name="pb_create_2">
+   <widget class="QPushButton" name="pb_create">
     <property name="geometry">
      <rect>
       <x>60</x>
-      <y>270</y>
+      <y>240</y>
       <width>171</width>
       <height>24</height>
      </rect>
@@ -95,53 +95,7 @@ color: #FFFFFF
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLineEdit" name="le_amount_2">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>200</y>
-      <width>171</width>
-      <height>21</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <bold>true</bold>
-     </font>
-    </property>
-    <property name="inputMask">
-     <string/>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="frame">
-     <bool>false</bool>
-    </property>
-    <property name="echoMode">
-     <enum>QLineEdit::Normal</enum>
-    </property>
-    <property name="placeholderText">
-     <string>Initial Amount</string>
-    </property>
-   </widget>
-   <widget class="Line" name="line_8">
-    <property name="geometry">
-     <rect>
-      <x>60</x>
-      <y>220</y>
-      <width>171</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="frameShadow">
-     <enum>QFrame::Plain</enum>
-    </property>
-    <property name="orientation">
-     <enum>Qt::Horizontal</enum>
-    </property>
-   </widget>
-   <widget class="QComboBox" name="cb_type_2">
+   <widget class="QComboBox" name="cb_type">
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -177,7 +131,7 @@ color: #7F7F7F
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QComboBox" name="cb_currency_2">
+   <widget class="QComboBox" name="cb_currency">
     <property name="geometry">
      <rect>
       <x>60</x>
@@ -207,11 +161,11 @@ color: #7F7F7F
      <bool>false</bool>
     </property>
    </widget>
-   <widget class="QLabel" name="l_message_2">
+   <widget class="QLabel" name="l_message">
     <property name="geometry">
      <rect>
       <x>0</x>
-      <y>320</y>
+      <y>290</y>
       <width>291</width>
       <height>31</height>
      </rect>

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1018</width>
-    <height>609</height>
+    <height>632</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -58,7 +58,7 @@ background-color: #F8F8F8;
       </font>
      </property>
      <property name="styleSheet">
-      <string notr="true">color: #16066B;</string>
+      <string notr="true">color: #000000;</string>
      </property>
      <property name="text">
       <string>Manage Accounts</string>
@@ -70,7 +70,7 @@ background-color: #F8F8F8;
        <x>80</x>
        <y>120</y>
        <width>651</width>
-       <height>401</height>
+       <height>321</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -129,7 +129,7 @@ padding: 30px;
       <bool>false</bool>
      </attribute>
      <attribute name="horizontalHeaderDefaultSectionSize">
-      <number>150</number>
+      <number>110</number>
      </attribute>
      <attribute name="horizontalHeaderHighlightSections">
       <bool>true</bool>
@@ -279,7 +279,7 @@ color: #FFFFFF
       <property name="geometry">
        <rect>
         <x>30</x>
-        <y>115</y>
+        <y>116</y>
         <width>131</width>
         <height>16</height>
        </rect>
@@ -343,7 +343,7 @@ color: #FFFFFF
 border-radius: 20px;
 border-width: 2px;
 border-color: #3792fa;
-background-color: #16066B;
+background-color: #000000;
 color: #FFFFFF;
 }</string>
      </property>
@@ -458,7 +458,7 @@ money to another account first.</string>
        <x>740</x>
        <y>40</y>
        <width>211</width>
-       <height>522</height>
+       <height>521</height>
       </rect>
      </property>
      <property name="styleSheet">
@@ -623,15 +623,15 @@ color: #FFFFFF
      <property name="geometry">
       <rect>
        <x>80</x>
-       <y>530</y>
+       <y>450</y>
        <width>651</width>
-       <height>31</height>
+       <height>101</height>
       </rect>
      </property>
      <property name="styleSheet">
-      <string notr="true">background: #FFFFFF;
+      <string notr="true">background: #000000;
 border: 1px solid;
-border-color: #FFFFFF;
+border-color: #000000;
 border-radius:15px;</string>
      </property>
      <widget class="QLabel" name="l_currentAccount">
@@ -651,7 +651,7 @@ border-radius:15px;</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true"/>
+       <string notr="true">color: #FFFFFF</string>
       </property>
       <property name="text">
        <string>(No account selected)</string>
@@ -674,11 +674,139 @@ border-radius:15px;</string>
         <bold>false</bold>
        </font>
       </property>
+      <property name="styleSheet">
+       <string notr="true">color: #FFFFFF</string>
+      </property>
       <property name="text">
        <string>Money transfered successfully!</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="widget_5" native="true">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>480</y>
+       <width>651</width>
+       <height>81</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: #FFFFFF;
+border: 1px solid;
+border-color: #FFFFFF;
+border-radius:15px;</string>
+     </property>
+     <widget class="QLabel" name="l_accountType">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>0</y>
+        <width>251</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Semibold</family>
+        <pointsize>10</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+     <widget class="QLabel" name="I_accountFeature">
+      <property name="geometry">
+       <rect>
+        <x>210</x>
+        <y>10</y>
+        <width>411</width>
+        <height>61</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Semilight</family>
+        <pointsize>10</pointsize>
+        <italic>false</italic>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="alignment">
+       <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+      </property>
+     </widget>
+     <widget class="QLabel" name="l_accountAmount">
+      <property name="geometry">
+       <rect>
+        <x>20</x>
+        <y>30</y>
+        <width>191</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Semibold</family>
+        <pointsize>14</pointsize>
+        <bold>true</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="w_debt" native="true">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>10</y>
+       <width>641</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">background: #f50057;
+border: 1px solid;
+border-color: #000000;
+border-radius:15px;</string>
+     </property>
+     <widget class="QLabel" name="l_currentAccount_2">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>641</width>
+        <height>31</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <family>Segoe UI Semibold</family>
+        <pointsize>10</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: #FFFFFF</string>
+      </property>
+      <property name="text">
+       <string>         You ran out of your credit limit, refill the credit or we call the cops!</string>
       </property>
      </widget>
     </widget>
@@ -690,6 +818,8 @@ border-radius:15px;</string>
     <zorder>w_transfer_2</zorder>
     <zorder>w_placeholder</zorder>
     <zorder>widget_2</zorder>
+    <zorder>widget_5</zorder>
+    <zorder>w_debt</zorder>
    </widget>
    <widget class="QWidget" name="tab_3">
     <property name="styleSheet">
@@ -852,7 +982,7 @@ border-radius: 7px
        <property name="geometry">
         <rect>
          <x>20</x>
-         <y>40</y>
+         <y>50</y>
          <width>131</width>
          <height>21</height>
         </rect>
@@ -866,6 +996,33 @@ border-radius: 7px
        </property>
        <property name="text">
         <string>Visit my website:</string>
+       </property>
+       <property name="alignment">
+        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+       </property>
+      </widget>
+      <widget class="QLabel" name="l_user_6">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>70</y>
+         <width>131</width>
+         <height>21</height>
+        </rect>
+       </property>
+       <property name="font">
+        <font>
+         <family>Segoe UI</family>
+         <pointsize>9</pointsize>
+         <bold>true</bold>
+         <underline>true</underline>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">color: #f50057</string>
+       </property>
+       <property name="text">
+        <string>andriybobchuk.com</string>
        </property>
        <property name="alignment">
         <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

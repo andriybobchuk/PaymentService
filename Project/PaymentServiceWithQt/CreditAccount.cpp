@@ -1,21 +1,19 @@
 #include "CreditAccount.h"
+#include "util.h"
+
+
 
 CreditAccount::CreditAccount(
     int uid, 
     std::string currency, 
     double amount, 
     std::string status,
-    double loanRate
-) : BaseAccount(uid, currency, amount, status) {
-    mLoanRate = loanRate;
+    std::string lastRecalculation
+) : BaseAccount(uid, currency, amount, status, lastRecalculation) {
 }
 
-double CreditAccount::getLoanRate() const {
-    return mLoanRate;
-}
-
-void CreditAccount::setLoanRate(double mLoanRate) {
-    CreditAccount::mLoanRate = mLoanRate;
+std::string CreditAccount::getType() {
+    return CREDIT_ACCOUNT;
 }
 
 std::ostream& operator<<(std::ostream& os, CreditAccount& creditAccount) {
@@ -24,7 +22,22 @@ std::ostream& operator<<(std::ostream& os, CreditAccount& creditAccount) {
         << ",\"currency\":\"" << creditAccount.getCurrency()
         << "\",\"amount\":" << creditAccount.getAmount()
         << ",\"status\":\"" << creditAccount.getStatus()
-        << "\",\"loanRate\":" << creditAccount.getLoanRate()
-        << "}";
+        << "\",\"lastRecalculation\":\"" << creditAccount.getLastBalanceRecalculation()
+        << "\"}";
     return os;
+}
+
+std::vector<std::string> CreditAccount::toStringVector() {
+
+    return {
+
+       std::to_string(getUid()),
+       getCurrency(),
+       doubleToString(getAmount()),
+       CREDIT_ACCOUNT,
+       getStatus(),
+       getType()
+    
+    };
+
 }

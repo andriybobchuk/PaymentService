@@ -396,7 +396,7 @@ color: #FFFFFF
         <bool>false</bool>
        </property>
        <property name="echoMode">
-        <enum>QLineEdit::Password</enum>
+        <enum>QLineEdit::Normal</enum>
        </property>
        <property name="placeholderText">
         <string>Username</string>

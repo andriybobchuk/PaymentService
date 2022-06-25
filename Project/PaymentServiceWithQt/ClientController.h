@@ -2,40 +2,54 @@
 
 #include "Client.h"
 #include "util.h"
+#include <variant>
+#include <sstream>
+#include <chrono>
+#include <time.h>
+#include <cmath>
+#include <ranges>
 
 class ClientController
 {
 private:
+	std::shared_ptr<BaseAccount> mCurrentAccount;
 	Client* mCurrentClient;
 	DebitAccount* mCurrentDebitAccount;
 
 public:
 	ClientController(Client* currentClient);
 
-	void setCurrentDebitAccount(std::string uid);
 
-	std::vector<std::string> getCurrentDebitAccount();
-
-	// To be implemented
-	std::vector<std::vector<std::string>> getAllAccounts();
-//	bool isAccountApproved(int id);
-	//void approveAccountById(int id);
-	//void banAccountById(int id);
+	std::vector <std::shared_ptr<BaseAccount>> getAllBaseAccounts();
+	std::vector <std::vector<std::string>> getMyBaseAccounts();
+	std::vector <std::vector<std::string>> getAllAccounts();
 
 
-	void createDebitAccount(std::string currency);
 
-	void createCreditAccount(std::string currency, double amount);
+	void setCurrentAccount(std::string uid);
 
+	std::shared_ptr<BaseAccount> getCurrentAccount();
+
+	std::vector<std::string> getCurrentStringAccount();
+
+	bool isCreditAccount(int uid);
+
+	bool addOwner(std::string email);
+
+	void recalculateDepositBalance(std::shared_ptr<BaseAccount> account);
+
+	bool recalculateCreditBalance(std::shared_ptr<BaseAccount> account);
+	
+	void createAccount(std::string type, std::string currency);
+
+	bool recalculationSuccessful();
 
 	//pb_suspend
-	void suspendDebitAccount();
-	void suspendCreditAccount();
+	bool exists(int id);
+	bool suspendAccount();
 
 
-	bool sendMoney(std::string recipientAccountUid, double amount);
-
-
+	bool sendMoney(int recipientAccountUid, double amount);
 
 
 	std::string getCurrentUserEmail();

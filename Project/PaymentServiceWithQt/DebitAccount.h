@@ -1,27 +1,26 @@
 #pragma once
 #include "BaseAccount.h"
+#include "constants.h"
+//#include "util.h"
 
 class DebitAccount : public BaseAccount {
 
-	double mDepositRate;
-
 public:
-	double getDepositRate() const;
 
-	void setDepositRate(double mDepositRate);
+	std::string getType();
 
 	DebitAccount(
 		int uid,
 		std::string currency,
 		double amount,
 		std::string status,
-		double depositRate
+		std::string lastRecalculated
 		
 	);
 
-	double getDepositRate();
-
 	friend std::ostream& operator<<(std::ostream& os, DebitAccount& debitAccount);
+
+	std::vector<std::string> toStringVector();
 
 };
 

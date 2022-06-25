@@ -3,8 +3,10 @@
 
 
 
-EntryController::EntryController(QWidget* parent) : mParentWidget(parent)
-{
+EntryController::EntryController(QWidget* parent) : mParentWidget(parent) {
+
+    createDatabaseBackup();
+
 }
 
 
@@ -15,7 +17,7 @@ bool EntryController::signUpClient(std::string username, std::string password, s
 
     if (Reservation::reserve(email)) {
 
-        pushToDatabase(); // push a new reserved email, so that while we register a new user no one will interfer
+        pushToDatabase(); // push a new reserved email, so that while we register a new user no one will interfere
 
         PaymentService::getInstance()->addClient(Client(username, passwordToHash(password), email)); // Adding a new client
         

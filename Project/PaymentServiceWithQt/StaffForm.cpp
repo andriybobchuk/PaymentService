@@ -9,23 +9,19 @@ StaffForm::StaffForm(QWidget *parent, StaffController* staffController) :
 	parentWidget()->hide();
 
 
+	// Display the table with user sign up requests
 	setupUsersListTab();
 
+	// Display the table with account requests
 	setupAccountsListTab();
 
+
 	setupSettingsTab();
-
-
-
-	
 }
 
 StaffForm::~StaffForm()
 {
 }
-
-
-
 
 void StaffForm::setupUsersActionButton(int id) {
 
@@ -35,10 +31,10 @@ void StaffForm::setupUsersActionButton(int id) {
 
 	if (mStaffController->isClientApproved(id)) {
 		pb_userAction->setText("Ban");
-		pb_userAction->setStyleSheet("#pb_useraction {\nborder-style: outset;\nborder-radius: 10px;\nborder-color:#000000;\nborder-width: 1px;\nmin-width: 5em;\nfont: bold 12px;\npadding: 3px;\nbackground-color: #000000;\ncolor: #FFFFFF}");
+		pb_userAction->setStyleSheet("#pb_useraction {\nborder-style: outset;\nborder-radius: 10px;\nborder-color:#000000;\nborder-width: 0.5px;\nmin-width: 5em;\nfont: bold 10px;\npadding: 3px;\nmargin: 2px;\nbackground-color: #000000;\ncolor: #FFFFFF}");
 	} else {
 		pb_userAction->setText("Approve");
-		pb_userAction->setStyleSheet("#pb_useraction {\nborder-style: outset;\nborder-radius: 10px;\nborder-color:#000000;\nborder-width: 1px;\nmin-width: 5em;\nfont: bold 12px;\npadding: 3px;\nbackground-color: #FFFFFF;\ncolor: #000000}");
+		pb_userAction->setStyleSheet("#pb_useraction {\nborder-style: outset;\nborder-radius: 10px;\nborder-color:#000000;\nborder-width: 0.5px;\nmin-width: 5em;\nfont: bold 10px;\npadding: 3px;\nmargin: 2px;\nbackground-color: #FFFFFF;\ncolor: #000000}");
 	}
 
 	// Button styling which can be done ONLY programmatically
@@ -52,9 +48,9 @@ void StaffForm::setupUsersActionButton(int id) {
 	// just do whatever you should and reload the database
 	connect(pb_userAction, &QPushButton::clicked, [=]() {
 		if (pb_userAction->text() == "Approve") {
-			mStaffController->approveClientById(id); // Ask controller to approve him    
+			mStaffController->changeClientStatus(id, APPROVED); // Ask controller to approve him    
 		} else {
-			mStaffController->banClientById(id); // Ask controller to ban him 
+			mStaffController->changeClientStatus(id, BANNED); // Ask controller to ban him 
 		}
 		setupUserTable(); // Reload the table so that the user can see changes
 	});
@@ -73,18 +69,47 @@ void StaffForm::setupUserTable() {
 		int id = stoi(client[0]);
 
 		ui.tw_users->insertRow(id);
-		ui.tw_users->setItem(id, 0, new QTableWidgetItem(QString::fromStdString("    " + client[1])));
+		ui.tw_users->setItem(id, 0, new QTableWidgetItem(QString::fromStdString(client[1])));
 		ui.tw_users->setItem(id, 1, new QTableWidgetItem(QString::fromStdString(client[2])));
 		ui.tw_users->setItem(id, 2, new QTableWidgetItem(QString::fromStdString(client[3])));
 
 		setupUsersActionButton(id);
-
 	}
 }
 
-// todo button for accounts
-void StaffForm::setupAccountActionButton(int id)
-{
+void StaffForm::setupAccountActionButton(int id) {
+
+	QWidget* pWidget = new QWidget();
+	QPushButton* pb_accountAction = new QPushButton();
+	pb_accountAction->setObjectName("pb_accountaction"); // Layout id
+
+	if (mStaffController->isAccountApproved(id)) {
+		pb_accountAction->setText("Ban");
+		pb_accountAction->setStyleSheet("#pb_accountaction {\nborder-style: outset;\nborder-radius: 10px;\nborder-color:#000000;\nborder-width: 0.5px;\nmin-width: 5em;\nfont: bold 10px;\npadding: 3px;\nmargin: 2px;\nbackground-color: #000000;\ncolor: #FFFFFF}");
+	}
+	else {
+		pb_accountAction->setText("Approve");
+		pb_accountAction->setStyleSheet("#pb_accountaction {\nborder-style: outset;\nborder-radius: 10px;\nborder-color:#000000;\nborder-width: 0.5px;\nmin-width: 5em;\nfont: bold 10px;\npadding: 3px;\nmargin: 2px;\nbackground-color: #FFFFFF;\ncolor: #000000}");
+	}
+
+	// Button styling which can be done ONLY programmatically
+	QHBoxLayout* pLayout = new QHBoxLayout(pWidget);
+	pLayout->addWidget(pb_accountAction);
+	pLayout->setAlignment(Qt::AlignCenter);
+	pLayout->setContentsMargins(0, 0, 0, 0);
+	pWidget->setLayout(pLayout);
+	ui.tw_accounts->setCellWidget(id, 4, pWidget);
+
+	// just do whatever you should and reload the database
+	connect(pb_accountAction, &QPushButton::clicked, [=]() {
+		if (pb_accountAction->text() == "Approve") {
+			mStaffController->changeAccountStatus(id, APPROVED); // Ask controller to approve him    
+		}
+		else {
+			mStaffController->changeAccountStatus(id, BANNED); // Ask controller to ban him 
+		}
+		setupAccountTable(); // Reload the table so that the user can see changes
+	});
 }
 
 
@@ -94,19 +119,20 @@ void StaffForm::setupAccountTable() {
 	ui.tw_accounts->setRowCount(0);
 
 	// Users data obtained from controller
-	std::vector<std::vector<std::string>> users(mStaffController->getAllAccounts());
+	std::vector<std::vector<std::string>> accounts(mStaffController->getAllAccounts());
 
-	for (auto& user : users) {
+	int itr = 0;
+	for (auto& account : accounts) {
 
-		int id = stoi(user[0]);
+		ui.tw_accounts->insertRow(itr);
+		ui.tw_accounts->setItem(itr, 0, new QTableWidgetItem(QString::fromStdString("  " + account[0]))); // Uid
+		ui.tw_accounts->setItem(itr, 1, new QTableWidgetItem(QString::fromStdString(account[1] + " " + account[2]))); // Currency + Amount 
+		ui.tw_accounts->setItem(itr, 2, new QTableWidgetItem(QString::fromStdString(account[3]))); // Type
+		ui.tw_accounts->setItem(itr, 3, new QTableWidgetItem(QString::fromStdString(account[4]))); // Status
 
-		ui.tw_accounts->insertRow(id);
-		ui.tw_accounts->setItem(id, 0, new QTableWidgetItem(QString::fromStdString("  " + user[1]))); // Uid
-		ui.tw_accounts->setItem(id, 1, new QTableWidgetItem(QString::fromStdString(user[2] + " " + user[3]))); // Currency + Amount 
-		ui.tw_accounts->setItem(id, 2, new QTableWidgetItem(QString::fromStdString(user[4] + "(" + user[5] + "% / yr.)"))); // Type + rate
-		ui.tw_accounts->setItem(id, 3, new QTableWidgetItem(QString::fromStdString(user[6]))); // Status
+		setupAccountActionButton(itr);
 
-		setupAccountActionButton(id);
+		itr++;
 	}
 }
 
@@ -116,7 +142,6 @@ void StaffForm::setupUsersListTab() {
 }
 
 void StaffForm::setupAccountsListTab() {
-	// Todo("Not yet implemented");
 	setupAccountTable();
 }
 

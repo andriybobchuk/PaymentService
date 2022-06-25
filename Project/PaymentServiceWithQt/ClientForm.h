@@ -5,7 +5,6 @@
 #include <QHeaderView>
 #include <QHBoxLayout>
 #include "ui_ClientForm.h"
-
 #include "ClientController.h"
 #include "constants.h"
 #include "util.h"
@@ -29,12 +28,21 @@ private:
 
 private slots:
 
-	void setupAccountTab();
-	void setupAccountTable();
-	void setupTableActionButton(int id, std::string uid);
-	void registerAccount();
-	void onSendMoneyClick();
+	void recalculateBalances();
 
+	void issueDebtReport();
+
+	void setupAccountTab();
+
+	void setupAccountTable();
+	
+	void setupTableActionButton(int id, std::vector<std::string>);
+
+	void onClickTransferMoney();
+
+	void onClickAddOwner();
+
+	void onClickSuspend();
 
 	void setupSettingsTab();
 

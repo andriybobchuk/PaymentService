@@ -9,17 +9,19 @@ ClientForm::ClientForm(QWidget *parent, ClientController* clientController)
 	this->setFixedSize(QSize(1018, 600));
 	parentWidget()->hide();
 
-	//setupCreateAccountPanel();
+
+	ui.l_message->setVisible(false);
+
+	recalculateBalances();
 
 	setupAccountTab();
-	onSendMoneyClick();
+	onClickTransferMoney();
 	onClickCreateAccount();
+	onClickSuspend();
+	onClickAddOwner();
 
 	setupSettingsTab();
 
-	///-----------
-	
-	
 }
 
 
@@ -27,53 +29,19 @@ ClientForm::~ClientForm()
 {
 }
 
-// todo
-//void ClientForm::setupCreateAccountPanel() {
-//
-//	QStringList list = (QStringList() << QString::fromStdString(DEBIT_ACCOUNT) << QString::fromStdString(CREDIT_ACCOUNT));
-//	ui.cb_type->addItems(list);
-//
-//	QStringList list1 = (QStringList() << QString::fromStdString("PLN") << QString::fromStdString("USD"));
-//	ui.cb_currency->addItems(list1);
-//
-//	connect(ui.pb_create, SIGNAL(clicked()), this, SLOT(registerAccount()));
-//	ui.l_message->setVisible(false);
-//}
 
+void ClientForm::recalculateBalances() {
 
-// todo
-void ClientForm::registerAccount() {
-//	QString type = ui.cb_type->currentText();
-//	QString currency = ui.cb_currency->currentText();
-//	QString amount = ui.le_amount->text();
-//
-//	ui.l_message->setVisible(true);
-//
-//	if (type.toStdString() == DEBIT_ACCOUNT) {
-//		if (currency.size() != 0) {
-//			createDebitAccount(currency.toStdString());
-//			ui.l_message->setText("Sent for approval");
-//		}
-//		else {
-//			ui.l_message->setText("Currency missing");
-//		}
-//	} else if (type.toStdString() == CREDIT_ACCOUNT) {
-//		
-//		if (currency.size() != 0 && amount.toDouble() >= 0 
-//			// Checking the upper loan limit in our currency rate map:
-//			&& (amount.toDouble() <= LOAN_LIMIT / CURRENCY_RATES.find(currency.toStdString())->second)) {
-//
-//			createCreditAccount(currency.toStdString(), amount.toDouble());
-//			ui.l_message->setText("Sent for approval");
-//		}
-//		else {
-//			ui.l_message->setText("Limit exceeded or currency missing");
-//		}
-//	}
+	ui.w_debt->setVisible(false);
+
+	if (!mClientController->recalculationSuccessful()) {
+		issueDebtReport();
+	}
 }
 
-void ClientForm::onSendMoneyClick()
-{
+
+// Done
+void ClientForm::onClickTransferMoney() {
 	ui.l_message->setVisible(false);
 
 	connect(ui.pb_send, &QPushButton::clicked, [=]() {
@@ -87,9 +55,19 @@ void ClientForm::onSendMoneyClick()
 			return;
 		}
 
-		if (mClientController->sendMoney(recipientAccountUid.toStdString(), amount.toDouble())) {
+		if (!isTransferAmountValid(amount.toStdString())) {
+			ui.l_message->setText("Enter proper amount!");
+			return;
+		}
+
+		if (mClientController->sendMoney(recipientAccountUid.toInt(), amount.toDouble())) {
 			ui.l_message->setText("Money transfered successfully!");
+			ui.le_toAccount->clear();
+			ui.le_toAmount->clear();
 			setupAccountTable(); // refresh the table with balance
+
+			// refresh bottom panel
+			ui.l_accountAmount->setText(QString::fromStdString(mClientController->getCurrentStringAccount()[1]));
 		}
 		else {
 			ui.l_message->setText("Something went wrong");
@@ -98,7 +76,47 @@ void ClientForm::onSendMoneyClick()
 
 }
 
-void ClientForm::setupTableActionButton(int id, std::string uid) {
+void ClientForm::onClickAddOwner() {
+
+	connect(ui.pb_addOwner, &QPushButton::clicked, [=]() {\
+
+		ui.l_message->setVisible(true);
+
+		QString email = ui.le_newOwner->text();
+
+		if (isEmailValid(email.toStdString())) {
+
+			if (mClientController->addOwner(email.toStdString())) {
+				ui.l_message->setText("New owner added!");
+				ui.le_newOwner->clear();
+			}
+			else {
+				ui.l_message->setText("Something went wrong");
+			}
+		}
+		else {
+			ui.l_message->setText("Email is invalid!");
+		}
+	});
+}
+
+void ClientForm::onClickSuspend() {
+
+	connect(ui.pb_suspend, &QPushButton::clicked, [=]() {
+
+		ui.l_message->setVisible(true);
+
+		if (mClientController->suspendAccount()) {
+			ui.l_message->setText("Account deleted!");
+			setupAccountTable(); // refresh
+		}
+		else {
+			ui.l_message->setText("Pay off the debt first!");
+		}
+	});
+}
+
+void ClientForm::setupTableActionButton(int id, std::vector<std::string> currentAccount) {
 
 	QWidget* pWidget = new QWidget();
 	QPushButton* pb_userAction = new QPushButton();
@@ -119,9 +137,17 @@ void ClientForm::setupTableActionButton(int id, std::string uid) {
 	// just do whatever you should and reload the database
 	connect(pb_userAction, &QPushButton::clicked, [=]() {
 
-		mClientController->setCurrentDebitAccount(uid);
+		mClientController->setCurrentAccount(currentAccount[0]);
 
-		ui.l_currentAccount->setText(QString::fromStdString("(" + uid + ")"));
+		ui.l_currentAccount->setText(QString::fromStdString("Current selected account:     #" + currentAccount[0] + "."));
+		ui.l_accountAmount->setText(QString::fromStdString(currentAccount[1]));
+		ui.l_accountType->setText(QString::fromStdString(currentAccount[3] + " - " + currentAccount[2]));
+		if (currentAccount[3] == DEBIT_ACCOUNT) {
+			ui.I_accountFeature->setText(QString::fromStdString(DEBIT_FEATURE));
+		}
+		else {
+			ui.I_accountFeature->setText(QString::fromStdString(CREDIT_FEATURE));
+		}
 		ui.w_placeholder->setVisible(false);
 	});
 }
@@ -132,21 +158,28 @@ void ClientForm::setupAccountTable() {
 	ui.tw_accounts->setRowCount(0);
 
 	// Users data obtained from controller
-	std::vector<std::vector<std::string>> users(mClientController->getAllAccounts());
+	auto accounts(mClientController->getMyBaseAccounts());
 
-	for (auto& user : users) {
+	int itr = 0;
+	for (auto& account : accounts) {
 
-		int id = stoi(user[0]);
+		ui.tw_accounts->insertRow(itr);
+		ui.tw_accounts->setItem(itr, 0, new QTableWidgetItem(QString::fromStdString(account[0]))); // Uid
+		ui.tw_accounts->setItem(itr, 1, new QTableWidgetItem(QString::fromStdString(account[1]))); // Currency + Amount 
+		ui.tw_accounts->setItem(itr, 2, new QTableWidgetItem(QString::fromStdString(account[3]))); // Type
+		ui.tw_accounts->setItem(itr, 3, new QTableWidgetItem(QString::fromStdString(account[2]))); // Status
 
-		ui.tw_accounts->insertRow(id);
-		ui.tw_accounts->setItem(id, 0, new QTableWidgetItem(QString::fromStdString(user[1]))); // Uid
-		ui.tw_accounts->setItem(id, 1, new QTableWidgetItem(QString::fromStdString(user[2] + " " + user[3]))); // Currency + Amount 
-		ui.tw_accounts->setItem(id, 2, new QTableWidgetItem(QString::fromStdString(user[4] + "(" + user[5] + "% / yr.)"))); // Type + rate
-
-		setupTableActionButton(id, user[1]);
+		if (account[2] == APPROVED) {
+			setupTableActionButton(itr, account);
+		}
+		itr++;
 	}
 }
 
+
+void ClientForm::issueDebtReport() {
+	ui.w_debt->setVisible(true);
+}
 
 void ClientForm::setupAccountTab() {
 
@@ -166,7 +199,7 @@ void ClientForm::setupSettingsTab() {
 void ClientForm::onClickCreateAccount()
 {
 	connect(ui.pb_new, &QPushButton::clicked, [=]() {
-		AccountCreatorDialog* accountCreatorDialog = new AccountCreatorDialog(this);
+		AccountCreatorDialog* accountCreatorDialog = new AccountCreatorDialog(this, mClientController);
 		accountCreatorDialog->show();
 		parentWidget()->hide();
 	});

@@ -1,17 +1,21 @@
 #include "DebitAccount.h"
+#include "util.h"
+
+
+std::string DebitAccount::getType()
+{
+    return DEBIT_ACCOUNT;
+}
 
 DebitAccount::DebitAccount(
     int uid,
     std::string currency,
     double amount,
     std::string status,
-    double depositRate) : BaseAccount(uid, currency, amount, status) {
-    mDepositRate = depositRate;
+    std::string lastRecalculation
+    ) : BaseAccount(uid, currency, amount, status, lastRecalculation) {
 }
 
-double DebitAccount::getDepositRate() {
-    return mDepositRate;
-}
 
 std::ostream& operator<<(std::ostream& os, DebitAccount& debitAccount) {
     os
@@ -19,15 +23,22 @@ std::ostream& operator<<(std::ostream& os, DebitAccount& debitAccount) {
         << ",\"currency\":\"" << debitAccount.getCurrency()
         << "\",\"amount\":" << debitAccount.getAmount()
         << ",\"status\":\"" << debitAccount.getStatus()
-        << "\",\"depositRate\":" << debitAccount.getDepositRate()
-        << "}";
+        << "\",\"lastRecalculation\":\"" << debitAccount.getLastBalanceRecalculation()
+        << "\"}";
     return os;
 }
 
-double DebitAccount::getDepositRate() const {
-    return mDepositRate;
-}
+std::vector<std::string> DebitAccount::toStringVector() {
 
-void DebitAccount::setDepositRate(double mDepositRate) {
-    DebitAccount::mDepositRate = mDepositRate;
+    return {
+
+       std::to_string(getUid()),
+       getCurrency(),
+       doubleToString(getAmount()),
+       DEBIT_ACCOUNT,
+       getStatus(),
+       getType()
+
+    };
+
 }

@@ -1,6 +1,8 @@
 #pragma once
 #include <string>
 #include <iostream>
+#include <vector>
+//#include "util.h"
 
 class BaseAccount {
 
@@ -8,8 +10,14 @@ class BaseAccount {
 	std::string mCurrency;
 	double mAmount;
 	std::string mStatus;
+	std::string mLastBalanceRecalculation;
+	
 
 public:
+
+	virtual std::vector<std::string> toStringVector() = 0;
+
+	virtual std::string getType() = 0;
 
 	const int getUid() const;
 
@@ -27,12 +35,21 @@ public:
 
 	void setStatus(const std::string& mStatus);
 
+	std::string getLastBalanceRecalculation() const;
+
+	void setLastBalanceRecalculation(const std::string& mLastBalanceRecalculation);
+
+	std::vector<std::string> toString();
+
+	bool send(BaseAccount& beneficiary, double amount);
+
 public:
 	BaseAccount(
 		int uid, 
 		std::string currency, 
 		double amount, 
-		std::string status
+		std::string status,
+		std::string lastRecalculation
 	);
 
 	std::string getCurrency();

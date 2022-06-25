@@ -33,7 +33,7 @@ bool deserialize() {
                     j["debitAccounts"][i]["currency"].get<std::string>(),
                     j["debitAccounts"][i]["amount"].get<double>(),
                     j["debitAccounts"][i]["status"].get<std::string>(),
-                    j["debitAccounts"][i]["depositRate"].get<double>()
+                    j["debitAccounts"][i]["lastRecalculation"].get<std::string>()
                 );
                 if (currentDebitAccount.getUid() == 0) {
                 }
@@ -49,7 +49,7 @@ bool deserialize() {
                     j["creditAccounts"][i]["currency"].get<std::string>(),
                     j["creditAccounts"][i]["amount"].get<double>(),
                     j["creditAccounts"][i]["status"].get<std::string>(),
-                    j["creditAccounts"][i]["loanRate"].get<double>()
+                    j["creditAccounts"][i]["lastRecalculation"].get<std::string>()
                 );
                 PaymentService::getInstance()->addCreditAccount(currentCreditAccount);
             }

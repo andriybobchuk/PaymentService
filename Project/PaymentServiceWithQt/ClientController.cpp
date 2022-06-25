@@ -5,23 +5,24 @@ ClientController::ClientController(Client* currentCient) : mCurrentClient(curren
 
 }
 
-void ClientController::setCurrentDebitAccount(std::string uid)
-{
-	for (auto& account : PaymentService::getInstance()->getDebitAccounts()) {
-		if (std::to_string(account.getUid()) == uid) {
-			mCurrentDebitAccount = &account;
+
+
+void ClientController::setCurrentAccount(std::string uid) {
+
+	for (auto& account : getAllBaseAccounts()) {
+		if (std::to_string(account->getUid()) == uid) {
+			mCurrentAccount = account;
 		}
 	}
 }
 
-std::vector<std::string> ClientController::getCurrentDebitAccount()
-{
-	return { std::to_string(mCurrentDebitAccount->getUid()),
-						mCurrentDebitAccount->getCurrency(),
-						std::to_string(mCurrentDebitAccount->getAmount()),
-						std::to_string(mCurrentDebitAccount->getDepositRate()),
-						mCurrentDebitAccount->getStatus()
-	};
+
+std::shared_ptr<BaseAccount> ClientController::getCurrentAccount() {
+	return std::shared_ptr<BaseAccount>();
+}
+
+std::vector<std::string> ClientController::getCurrentStringAccount() {
+	return mCurrentAccount->toString();
 }
 
 
@@ -29,99 +30,319 @@ std::vector<std::string> ClientController::getCurrentDebitAccount()
                               ACCOUNTS TAB
 *  =========================================================================================================== */
 
+std::vector <std::shared_ptr<BaseAccount>> ClientController::getAllBaseAccounts() {
+
+	std::vector <std::shared_ptr<BaseAccount>> result;
+	//auto creditVec (PaymentService::getInstance()->getCreditAccounts());
+	//auto debitVec (PaymentService::getInstance()->getDebitAccounts());
+
+	//result.insert(result.end(), debitVec.begin(), debitVec.end());
+	//result.insert(result.end(), creditVec.begin(), creditVec.end());
+
+
+	for (auto& account : PaymentService::getInstance()->getDebitAccounts()) {
+		if (account.getStatus() != SUSPENDED) {
+			std::shared_ptr<DebitAccount> shared = std::make_shared<DebitAccount>(account);
+			result.push_back(shared);
+		}
+	}
+
+	for (auto& account : PaymentService::getInstance()->getCreditAccounts()) {
+		if (account.getStatus() != SUSPENDED) {
+			std::shared_ptr<CreditAccount> shared = std::make_shared<CreditAccount>(account);
+			result.push_back(shared);
+		}
+	}
+
+	return result;
+}
+
+std::vector <std::vector<std::string>> ClientController::getMyBaseAccounts() {
+
+	std::vector <std::vector<std::string>> result;
+
+	for (auto& account : getAllBaseAccounts()) {
+		if (
+			std::find(
+				mCurrentClient->getDebitAccounts().begin(),
+				mCurrentClient->getDebitAccounts().end(),
+				account->getUid()
+			) != mCurrentClient->getDebitAccounts().end()) {
+
+			result.push_back(account->toString());
+		}
+		if (
+			std::find(
+				mCurrentClient->getCreditAccounts().begin(),
+				mCurrentClient->getCreditAccounts().end(),
+				account->getUid()
+			) != mCurrentClient->getCreditAccounts().end()) {
+
+			result.push_back(account->toString());
+		}
+	}
+
+	
+
+	return result;
+}
 
 std::vector<std::vector<std::string>> ClientController::getAllAccounts() {
 
-	std::vector<std::vector<std::string>> accounts;
+	std::vector<std::variant<DebitAccount, CreditAccount>> accounts;
+	std::vector<std::vector<std::string>> result;
 
-	int it = 0;
 	for (auto& account : PaymentService::getInstance()->getDebitAccounts()) {
+		if (
+			std::find(
+			mCurrentClient->getDebitAccounts().begin(), 
+			mCurrentClient->getDebitAccounts().end(), 
+			account.getUid()
+			) != mCurrentClient->getDebitAccounts().end()) {
+			accounts.push_back(account);
+		}
+	}
 
-		for (auto& userAccount : mCurrentClient->getDebitAccounts()) {
-			if (account.getUid() == userAccount) {
-				accounts.push_back(
-					{
-						std::to_string(it),
-						std::to_string(account.getUid()),
-						account.getCurrency(),
-						std::to_string(floor((account.getAmount() * 100) + 0.5) / 100.00),
-						DEBIT_ACCOUNT,
-						std::to_string(round(account.getDepositRate() * 100.0) / 100.0),
-						account.getStatus(),
-					}
-				);
-				it++;
+	for (auto& account : PaymentService::getInstance()->getCreditAccounts()) {
+		if (
+			std::find(
+				mCurrentClient->getCreditAccounts().begin(),
+				mCurrentClient->getCreditAccounts().end(),
+				account.getUid()
+			) != mCurrentClient->getCreditAccounts().end()) {
+			accounts.push_back(account);
+		}
+	}
+
+	for (auto& account : accounts) {
+		std::visit([&result](auto& object) {
+
+			result.push_back(object.toStringVector());
+
+		}, account);
+	}
+
+	return result;
+}
+
+bool ClientController::exists(int id) {
+	for (auto& account : getAllBaseAccounts()) {
+		if (account->getUid() == id
+			&& account->getStatus() == APPROVED) {
+			return true;
+		}
+	}
+	return false;
+}
+
+bool ClientController::suspendAccount() {
+
+	if (
+		isCreditAccount(mCurrentAccount->getUid())
+		&& mCurrentAccount->getAmount() < FOREIGN_LOAN_LIMIT(mCurrentAccount->getCurrency())
+		) {
+		return false;
+	}
+	mCurrentAccount->setStatus(SUSPENDED);
+
+	// Saving
+	PaymentService::getInstance()->updateAccount(mCurrentAccount);
+	pushToDatabase();
+
+	return true;
+}
+
+bool ClientController::isCreditAccount(int uid) {
+
+	for (auto& account : getAllBaseAccounts()) {
+		if (account->getUid() == uid) {
+			if (account->getType() == CREDIT_ACCOUNT) {
+				return true;
 			}
 		}
 	}
-	//for (auto& account : PaymentService::getInstance()->getCreditAccounts()) {
+	return false;
+}
 
-	//	accounts.push_back(
-	//		{
-	//			std::to_string(it),
-	//			std::to_string(account.getUid()),
-	//			account.getCurrency(),
-	//			std::to_string(account.getAmount()),
-	//			account.getStatus(),
-	//			std::to_string(account.getLoanRate())
-	//		}
-	//	);
+bool ClientController::addOwner(std::string email) {
 
-	//	it++;
-	//}
+	// You cannot make other people responsible for your loans.
+	if (isCreditAccount(mCurrentAccount->getUid())) {
+		return false;
+	}
 
-	return accounts;
+	for (auto& client : PaymentService::getInstance()->getClients()) {
+		if (client.getEmail() == email) {
+			client.addDebitAccount(mCurrentAccount->getUid());
+			return true;
+		}
+	}
+
+	pushToDatabase();
+	return false;
 }
 
 
-void ClientController::createDebitAccount(std::string currency)
-{
-    int uid = getNewAccountUid();
-    
-    PaymentService::getInstance()->addDebitAccount(
-       DebitAccount(
-                uid,
-                currency,
-                0.00,
-                PENDING_APPROVAL,
-                DEPOSIT_RATE)
-        );
 
-        mCurrentClient->addDebitAccount(uid);
+
+
+/*
+* 1. Take the balance 
+* 2. Take the date of the previous recalculation (from the account property)
+* 3. Convert string date to Date struct
+* 4. Get present date and convert it to Date struct
+* 5. Get the difference in days
+* 6. Do compoundInterestFunction
+*/
+void ClientController::recalculateDepositBalance(std::shared_ptr<BaseAccount> account) {
+
+	double initialBalance = account->getAmount();
+	std::string currency = account->getCurrency();
+	std::string lastRecalculationString = account->getLastBalanceRecalculation(); // DD MM YYYY
+
+	Date lastRecalculation = stringToDate(lastRecalculationString, '-');
+
+	Date currentDate = stringToDate(getCurrentDate(), '-');
+
+	int days = getDifference(lastRecalculation, currentDate);
+
+	double newBalance = compoundInterest(initialBalance, FOREIGN_DEPOSIT_INTEREST(currency), days);
+
+	account->setAmount(newBalance);
+
+	account->setLastBalanceRecalculation(getCurrentDate());
+
+	PaymentService::getInstance()->updateAccount(account);
 }
 
-void ClientController::createCreditAccount(std::string currency, double amount)
-{
-    int uid = getNewAccountUid();
-        PaymentService::getInstance()->addCreditAccount(
-            CreditAccount(
-                uid,
-                currency,
-                amount,
-                PENDING_APPROVAL,
-                LOAN_RATE)
-        );
 
-        mCurrentClient->addCreditAccount(uid);
+
+/*
+* 1. Take the balance
+* 2. If it is <70% out of 10K in USD -> 
+*	3. Take previous recaalculation date
+*	4. Convert string date to Date struct using regex
+*	5. Get present date and convert it to Date struct
+*	6. Get the difference in days
+*	7. Do loan function
+*/
+bool ClientController::recalculateCreditBalance(std::shared_ptr<BaseAccount> account) {
+
+	double initialBalance = account->getAmount();
+	std::string currency = account->getCurrency();
+	std::string lastRecalculationString = account->getLastBalanceRecalculation(); // DD MM YYYY
+
+	if (initialBalance < (FOREIGN_LOAN_LIMIT(currency) * CRITICAL_AMOUNT)) {
+
+		return false;
+
+	} else if (initialBalance < (FOREIGN_LOAN_LIMIT(currency) * MIN_INTEREST_FREE)) {
+
+		Date lastRecalculation = stringToDate(lastRecalculationString, '-');
+
+		Date currentDate = stringToDate(getCurrentDate(), '-');
+
+		int days = getDifference(lastRecalculation, currentDate);
+
+		double newBalance = loanInterest(initialBalance, FOREIGN_LOAN_INTEREST(currency), days);
+
+		account->setAmount(newBalance);
+
+		account->setLastBalanceRecalculation(getCurrentDate());
+
+		PaymentService::getInstance()->updateAccount(account);
+
+	}
+	else {
+		account->setLastBalanceRecalculation(getCurrentDate());
+	}
+
+	return true;
 }
 
 
-bool ClientController::sendMoney(std::string recipientAccountUid, double amount)
+void ClientController::createAccount(std::string type, std::string currency)
 {
-	if (mCurrentDebitAccount->getAmount() >= amount) {
-		for (auto& account : PaymentService::getInstance()->getDebitAccounts()) {
-			if (std::to_string(account.getUid()) == recipientAccountUid) {
-				if (account.getCurrency() == mCurrentDebitAccount->getCurrency()) {
 
-					// add money to recipient
-					account.setAmount(account.getAmount() + amount);
+	int uid = getNewAccountUid();
 
-					// substract money from sender
-					mCurrentDebitAccount->setAmount(mCurrentDebitAccount->getAmount() - amount);
 
-					return true;
+	if (type == DEBIT_ACCOUNT) {
+		PaymentService::getInstance()->addDebitAccount(
+			DebitAccount(
+				uid,
+				currency,
+				0.00,
+				PENDING_APPROVAL,
+				getCurrentDate())
+		);
+
+		mCurrentClient->addDebitAccount(uid);
+	}
+	else {
+		PaymentService::getInstance()->addCreditAccount(
+			CreditAccount(
+				uid,
+				currency,
+				FOREIGN_LOAN_LIMIT(currency),
+				PENDING_APPROVAL,
+				getCurrentDate())
+		);
+
+		mCurrentClient->addCreditAccount(uid);
+	}
+
+	pushToDatabase();
+}
+
+bool ClientController::recalculationSuccessful() {
+
+	for (auto& account : getAllBaseAccounts()) {
+
+
+		if (account->getType() == DEBIT_ACCOUNT) {
+			recalculateDepositBalance(account);
+		}
+		else {
+			if (!recalculateCreditBalance(account)) {
+
+				// is it mine?
+				if (std::find(
+					mCurrentClient->getCreditAccounts().begin(),
+					mCurrentClient->getCreditAccounts().end(),
+					account->getUid()
+				) != mCurrentClient->getCreditAccounts().end()) {
+					return false;
 				}
 			}
+		}
+	}
+	pushToDatabase();
+	pullFromDatabase();
+	return true;
+}
+
+// Done
+bool ClientController::sendMoney(int recipientAccountUid, double amount) {
+
+	for (auto& account : getAllBaseAccounts()) {
+		if (
+			account->getUid() == recipientAccountUid
+			&& exists(recipientAccountUid)
+			&& mCurrentAccount->getAmount() >= amount
+			) {
+
+			// add money to recipient
+			account->setAmount(account->getAmount() + (amount / RATES.find(account->getCurrency())->second));
+			PaymentService::getInstance()->updateAccount(account);
+
+			// substract money from sender
+			mCurrentAccount->setAmount(mCurrentAccount->getAmount() - amount);
+			PaymentService::getInstance()->updateAccount(mCurrentAccount);
+
+
+			pushToDatabase();
+			return true;
 		}
 	}
 	return false;

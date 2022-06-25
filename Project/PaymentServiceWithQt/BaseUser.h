@@ -18,6 +18,8 @@ public:
 
     virtual const std::string& getUsername();
 
+    //virtual double getInterest() {};
+
     void setUsername(const std::string& mUsername);
 
     const std::string& getPassword();

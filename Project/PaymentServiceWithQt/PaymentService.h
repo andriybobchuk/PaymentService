@@ -75,5 +75,8 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& os, PaymentService* paymentService);
 
+
+	void updateAccount(std::shared_ptr<BaseAccount> newAccount);
+
 };
 

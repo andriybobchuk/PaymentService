@@ -88,6 +88,33 @@ void PaymentService::setCreditAccounts(const std::vector<CreditAccount>& mCredit
     PaymentService::mCreditAccounts = mCreditAccounts;
 }
 
+
+
+void PaymentService::updateAccount(std::shared_ptr<BaseAccount> newAccount) {
+
+    if (newAccount->getType() == DEBIT_ACCOUNT) {
+        for (auto& oldAccount : getDebitAccounts()) {
+            if (oldAccount.getUid() == newAccount->getUid()) {
+                oldAccount.setAmount(newAccount->getAmount());
+                oldAccount.setStatus(newAccount->getStatus());
+                oldAccount.setLastBalanceRecalculation(newAccount->getLastBalanceRecalculation());
+            }
+        }
+    }
+    else {
+        for (auto& oldAccount : getCreditAccounts()) {
+            if (oldAccount.getUid() == newAccount->getUid()) {
+                oldAccount.setAmount(newAccount->getAmount());
+                oldAccount.setStatus(newAccount->getStatus());
+                oldAccount.setLastBalanceRecalculation(newAccount->getLastBalanceRecalculation());
+            }
+        }
+    }
+
+
+
+}
+
 std::ostream& operator<<(std::ostream& os, PaymentService* paymentService) {
     os << "{\"clients\":[";
     for (int i = 0; i < paymentService->mClients.size(); i++) {
