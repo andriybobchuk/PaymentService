@@ -5,8 +5,15 @@
 
 EntryController::EntryController(QWidget* parent) : mParentWidget(parent) {
 
-    createDatabaseBackup();
+    std::future<bool> backgroungThread = std::async(std::launch::async, createDatabaseBackup);
+    std::future_status status;
 
+    if (status == std::future_status::ready) {
+        // Backup is ready
+    }
+
+    pullFromDatabase();
+    int test = getNewAccountUid();
 }
 
 

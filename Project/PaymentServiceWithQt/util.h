@@ -12,6 +12,7 @@
 #include <sstream>
 #include <iomanip>
 #include <filesystem>
+#include <future>
 #include "database.h"
 #include "constants.h"
 #include "PaymentService.h"
@@ -40,7 +41,7 @@ bool comparePasswordToHash(std::string password, std::string hash);
 
 std::string doubleToString(double number);
 
-void createDatabaseBackup();
+bool createDatabaseBackup();
 
 
 struct Date {

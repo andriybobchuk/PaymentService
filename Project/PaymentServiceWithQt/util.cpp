@@ -50,7 +50,7 @@ bool isTransferAmountValid(std::string amount) {
     }
 }
 
-void createDatabaseBackup() {
+bool createDatabaseBackup() {
 
     const std::filesystem::path source = DATABASE_FILE;
     const std::filesystem::path destination = std::string(
@@ -64,27 +64,33 @@ void createDatabaseBackup() {
         destination, 
         std::filesystem::copy_options::overwrite_existing
     );
+    return true;
 }
 
 int getNewAccountUid() {
 
-
-   // auto result = std::ranges::max_element(v.begin(), v.end());
-
-
-
     int newAccountUid = 1000;
 
-    for (auto debitAccount : PaymentService::getInstance()->getDebitAccounts()) {
-        if (debitAccount.getUid() >= newAccountUid) {
-            newAccountUid = debitAccount.getUid() + 1;
-        }
-    }
-    for (auto creditAccount : PaymentService::getInstance()->getCreditAccounts()) {
-        if (creditAccount.getUid() >= newAccountUid) {
-            newAccountUid = creditAccount.getUid() + 1;
-        }
-    }
+    auto loop1 = std::async(std::launch::async,
+        [&]() { 
+            for (auto debitAccount : PaymentService::getInstance()->getDebitAccounts()) {
+                if (debitAccount.getUid() >= newAccountUid) {
+                    newAccountUid = debitAccount.getUid() + 1;
+                }
+            }
+        });
+
+    auto loop2 = std::async(std::launch::async,
+        [&]() { 
+            for (auto creditAccount : PaymentService::getInstance()->getCreditAccounts()) {
+                if (creditAccount.getUid() >= newAccountUid) {
+                    newAccountUid = creditAccount.getUid() + 1;
+                }
+            }
+        });
+
+    loop1.get();
+    loop2.get();
 
     return newAccountUid;
 }
