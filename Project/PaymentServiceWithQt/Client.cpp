@@ -35,18 +35,6 @@ Client::Client(
         mCreditAccounts.push_back(element);
 }
 
-// move assignment
-//Client& Client::operator=(Client&& other)
-//{
-//    //setUsername(std::move(other.getUsername()));
-//    //setEmail(std::move(other.getEmail()));
-//    //setPassword(std::move(other.getPassword()));
-//    mStatus = other.getStatus();
-//    mDebitAccounts = std::move(other.getDebitAccounts());
-//    mCreditAccounts = std::move(other.getCreditAccounts());
-//    return *this;
-//}
-
 const std::string& Client::getStatus() {
     return mStatus;
 }
@@ -71,9 +59,6 @@ void Client::setCreditAccounts(const std::vector<int>& mCreditAccounts) {
     Client::mCreditAccounts = mCreditAccounts;
 }
 
-
-
-
 int Client::getDebitAccount(int uid) {
     return mDebitAccounts.at(uid);
 }
@@ -89,10 +74,6 @@ int Client::getCreditAccount(int uid) {
 void Client::addCreditAccount(int uid) {
     Client::mCreditAccounts.push_back(uid);
 }
-
-
-
-
 
 std::ostream& operator<<(std::ostream& os, Client& client) {
     os

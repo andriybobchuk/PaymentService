@@ -2,33 +2,42 @@
 
 
 
-ClientForm::ClientForm(QWidget *parent, ClientController* clientController)
+ClientForm::ClientForm(QWidget *parent, std::shared_ptr<ClientController> clientController)
 	: QDialog(parent), mClientController(clientController) {
 
 	ui.setupUi(this);
 	this->setFixedSize(QSize(1018, 600));
 	parentWidget()->hide();
 
+	// SETUPS:
 
 	ui.l_message->setVisible(false);
 
 	recalculateBalances();
 
 	setupAccountTab();
-	onClickTransferMoney();
-	onClickCreateAccount();
-	onClickSuspend();
-	onClickAddOwner();
 
 	setupSettingsTab();
 
+
+	// ONCLICKS:
+
+	onClickTransferMoney();
+
+	onClickCreateAccount();
+
+	onClickSuspend();
+
+	onClickAddOwner();
+
+
+
+
 }
 
-
-ClientForm::~ClientForm()
-{
+ClientForm::~ClientForm() {
+	//delete mClientController;
 }
-
 
 void ClientForm::recalculateBalances() {
 
@@ -38,7 +47,6 @@ void ClientForm::recalculateBalances() {
 		issueDebtReport();
 	}
 }
-
 
 // Done
 void ClientForm::onClickTransferMoney() {
@@ -107,6 +115,8 @@ void ClientForm::onClickSuspend() {
 		ui.l_message->setVisible(true);
 
 		if (mClientController->suspendAccount()) {
+
+			ui.w_placeholder->setVisible(true);
 			ui.l_message->setText("Account deleted!");
 			setupAccountTable(); // refresh
 		}
@@ -139,7 +149,7 @@ void ClientForm::setupTableActionButton(int id, std::vector<std::string> current
 
 		mClientController->setCurrentAccount(currentAccount[0]);
 
-		ui.l_currentAccount->setText(QString::fromStdString("Current selected account:     #" + currentAccount[0] + "."));
+		ui.l_currentAccount->setText(QString::fromStdString("Current selected account: #" + currentAccount[0] + "."));
 		ui.l_accountAmount->setText(QString::fromStdString(currentAccount[1]));
 		ui.l_accountType->setText(QString::fromStdString(currentAccount[3] + " - " + currentAccount[2]));
 		if (currentAccount[3] == DEBIT_ACCOUNT) {
@@ -199,8 +209,11 @@ void ClientForm::setupSettingsTab() {
 void ClientForm::onClickCreateAccount()
 {
 	connect(ui.pb_new, &QPushButton::clicked, [=]() {
-		AccountCreatorDialog* accountCreatorDialog = new AccountCreatorDialog(this, mClientController);
-		accountCreatorDialog->show();
+
+		//AccountCreatorDialog* rawAccountCreatorDialog = new AccountCreatorDialog(this, mClientController);
+		mAccountCreatorDialog = std::make_shared<AccountCreatorDialog>(this, mClientController);
+
+		mAccountCreatorDialog->show();
 		parentWidget()->hide();
 	});
 }

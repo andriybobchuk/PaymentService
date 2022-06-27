@@ -16,22 +16,20 @@ class StaffForm : public QDialog
 	Q_OBJECT
 
 public:
-	StaffForm(QWidget* parent = Q_NULLPTR, StaffController* staffController = nullptr);
+	StaffForm(QWidget* parent = Q_NULLPTR, std::shared_ptr<StaffController> staffController = nullptr);
 	~StaffForm();
 
 private:
 	Ui::StaffForm ui;
-	StaffController* mStaffController;
+	std::shared_ptr<StaffController> mStaffController;
 
 private slots:
 
 	void setupAccountTable();
 	void setupUsersActionButton(int id);
 
-
 	void setupUserTable();
 	void setupAccountActionButton(int id);
-
 
 	void logOut();
 

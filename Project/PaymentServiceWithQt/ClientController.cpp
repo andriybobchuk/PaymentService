@@ -5,7 +5,9 @@ ClientController::ClientController(Client* currentCient) : mCurrentClient(curren
 
 }
 
+ClientController::~ClientController() {
 
+}
 
 void ClientController::setCurrentAccount(std::string uid) {
 
@@ -16,7 +18,6 @@ void ClientController::setCurrentAccount(std::string uid) {
 	}
 }
 
-
 std::shared_ptr<BaseAccount> ClientController::getCurrentAccount() {
 	return std::shared_ptr<BaseAccount>();
 }
@@ -25,7 +26,6 @@ std::vector<std::string> ClientController::getCurrentStringAccount() {
 	return mCurrentAccount->toString();
 }
 
-
 /* =========================================================================================================== *
                               ACCOUNTS TAB
 *  =========================================================================================================== */
@@ -33,12 +33,9 @@ std::vector<std::string> ClientController::getCurrentStringAccount() {
 std::vector <std::shared_ptr<BaseAccount>> ClientController::getAllBaseAccounts() {
 
 	std::vector <std::shared_ptr<BaseAccount>> result;
-	//auto creditVec (PaymentService::getInstance()->getCreditAccounts());
-	//auto debitVec (PaymentService::getInstance()->getDebitAccounts());
 
 	//result.insert(result.end(), debitVec.begin(), debitVec.end());
 	//result.insert(result.end(), creditVec.begin(), creditVec.end());
-
 
 	for (auto& account : PaymentService::getInstance()->getDebitAccounts()) {
 		if (account.getStatus() != SUSPENDED) {
@@ -81,8 +78,6 @@ std::vector <std::vector<std::string>> ClientController::getMyBaseAccounts() {
 			result.push_back(account->toString());
 		}
 	}
-
-	
 
 	return result;
 }
@@ -182,10 +177,6 @@ bool ClientController::addOwner(std::string email) {
 	return false;
 }
 
-
-
-
-
 /*
 * 1. Take the balance 
 * 2. Take the date of the previous recalculation (from the account property)
@@ -214,7 +205,6 @@ void ClientController::recalculateDepositBalance(std::shared_ptr<BaseAccount> ac
 
 	PaymentService::getInstance()->updateAccount(account);
 }
-
 
 
 /*
@@ -261,11 +251,9 @@ bool ClientController::recalculateCreditBalance(std::shared_ptr<BaseAccount> acc
 }
 
 
-void ClientController::createAccount(std::string type, std::string currency)
-{
+void ClientController::createAccount(std::string type, std::string currency) {
 
 	int uid = getNewAccountUid();
-
 
 	if (type == DEBIT_ACCOUNT) {
 		PaymentService::getInstance()->addDebitAccount(
@@ -292,13 +280,13 @@ void ClientController::createAccount(std::string type, std::string currency)
 		mCurrentClient->addCreditAccount(uid);
 	}
 
+	PaymentService::getInstance()->updateClient(mCurrentClient);
 	pushToDatabase();
 }
 
 bool ClientController::recalculationSuccessful() {
 
 	for (auto& account : getAllBaseAccounts()) {
-
 
 		if (account->getType() == DEBIT_ACCOUNT) {
 			recalculateDepositBalance(account);
@@ -332,14 +320,22 @@ bool ClientController::sendMoney(int recipientAccountUid, double amount) {
 			&& mCurrentAccount->getAmount() >= amount
 			) {
 
+			double targetRate = RATES.find(account->getCurrency())->second;
+			double sourceRate = RATES.find(mCurrentAccount->getCurrency())->second;
+			double conversionRate = targetRate / sourceRate;
+			double toPayRecipient = amount / conversionRate;
+
+
 			// add money to recipient
-			account->setAmount(account->getAmount() + (amount / RATES.find(account->getCurrency())->second));
+			account->setAmount(account->getAmount() + toPayRecipient);
 			PaymentService::getInstance()->updateAccount(account);
 
 			// substract money from sender
 			mCurrentAccount->setAmount(mCurrentAccount->getAmount() - amount);
-			PaymentService::getInstance()->updateAccount(mCurrentAccount);
 
+
+			PaymentService::getInstance()->updateAccount(mCurrentAccount);
+			PaymentService::getInstance()->updateAccount(account);
 
 			pushToDatabase();
 			return true;

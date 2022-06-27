@@ -13,12 +13,7 @@ public:
 
     BaseUser();
 
-    // &&
-    //BaseUser& operator=(BaseUser&& other) noexcept;
-
     virtual const std::string& getUsername();
-
-    //virtual double getInterest() {};
 
     void setUsername(const std::string& mUsername);
 
@@ -31,10 +26,6 @@ public:
     void setEmail(const std::string& mEmail);
 
     BaseUser(std::string username, std::string password, std::string email);
-
-
-
-
 
 };
 

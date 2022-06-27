@@ -7,13 +7,6 @@ EntryController::EntryController(QWidget* parent) : mParentWidget(parent) {
 
     std::future<bool> backgroungThread = std::async(std::launch::async, createDatabaseBackup);
     std::future_status status;
-
-    if (status == std::future_status::ready) {
-        // Backup is ready
-    }
-
-    pullFromDatabase();
-    int test = getNewAccountUid();
 }
 
 
@@ -43,28 +36,59 @@ bool EntryController::signInClient(std::string login, std::string password) {
     pullFromDatabase(); // Making sure to get the latest saved data
     
     Client* currentLoggedInClient{};
-    for (auto& client : PaymentService::getInstance()->getClients()) {
-        if (
-            client.getEmail() == login || client.getUsername() == login
 
-            && comparePasswordToHash(password, client.getPassword())
+    
+    if (DEBUG_MODE) {
 
-            && client.getStatus() == APPROVED
-            
-            ) {
+        // UNOPTIMAL WAY
+        for (auto& client : PaymentService::getInstance()->getClients()) {
+            if (
+                client.getEmail() == login || client.getUsername() == login
 
-            currentLoggedInClient = &client;
+                && comparePasswordToHash(password, client.getPassword())
+
+                && client.getStatus() == APPROVED
+
+                ) {
+
+                currentLoggedInClient = &client;
+            }
         }
+        if (!currentLoggedInClient) { return false; }
+        
+    }
+    else {
+
+        // OPTIMAL WAY
+        auto clients = PaymentService::getInstance()->getClients();
+        auto it = std::ranges::find_if(
+
+            clients.begin(),
+            clients.end(),
+            [login, password](Client& client) {
+                return (
+                    login == client.getEmail()
+                    && comparePasswordToHash(password, client.getPassword())
+                    && client.getStatus() == APPROVED
+                    );
+            });
+
+        if (clients.end() != it) {
+            currentLoggedInClient = &(*it);
+        }
+        else {
+            return false;
+        }
+        
     }
 
-    if (!currentLoggedInClient) { return false; }
 
-    ClientController* clientController = new ClientController(currentLoggedInClient);
+    // ClientController* clientController = new ClientController(currentLoggedInClient);
+    std::shared_ptr<ClientController> clientController = std::make_shared<ClientController>(currentLoggedInClient);
 
-
-
-    ClientForm* clientForm = new ClientForm(mParentWidget, clientController);
-    clientForm->show();
+    //ClientForm* clientForm = new ClientForm(mParentWidget, clientController);
+    mClientForm = std::make_shared<ClientForm>(mParentWidget, clientController);
+    mClientForm->show();
 
     return true;
 }
@@ -87,9 +111,12 @@ bool EntryController::signInStaff(std::string login, std::string password) {
 
     if (!currentLoggedInStaff) { return false; }
 
-    StaffController* staffController = new StaffController(currentLoggedInStaff);
-    StaffForm* staffForm = new StaffForm(mParentWidget, staffController);
-    staffForm->show();
+    // StaffController* staffController = new StaffController(currentLoggedInStaff);
+    std::shared_ptr<StaffController> staffController = std::make_shared<StaffController>(currentLoggedInStaff);
+
+    // StaffForm* staffForm = new StaffForm(mParentWidget, staffController);
+    mStaffForm = std::make_shared<StaffForm>(mParentWidget, staffController);
+    mStaffForm->show();
 
     return true;
 }

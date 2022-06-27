@@ -1,13 +1,10 @@
 #pragma once
 #include "BaseAccount.h"
 #include "constants.h"
-//#include "util.h"
-
 
 class CreditAccount : public BaseAccount {
 
 public:
-
 	std::string getType();
 
 	CreditAccount(

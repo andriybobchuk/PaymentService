@@ -1,6 +1,7 @@
 #pragma once
 
 #include <string>
+#include <ranges>
 #include "PaymentService.h"
 #include "util.h"
 #include "database.h"
@@ -19,6 +20,8 @@ class EntryController
 private:
 
 	QWidget* mParentWidget = Q_NULLPTR;
+	std::shared_ptr<ClientForm> mClientForm;
+	std::shared_ptr<StaffForm> mStaffForm;
 
 public:
 

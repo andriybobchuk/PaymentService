@@ -11,13 +11,6 @@ Staff::Staff(
     mPosition = position;
 }
 
-// move assignment
-//Staff& Staff::operator=(Staff&& other) noexcept
-//{
-//    mPosition = std::move(other.getPosition());
-//    return *this;
-//}
-
 std::ostream& operator<<(std::ostream& os, Staff& staff) {
     os
         << "{\"username\":\"" << staff.getUsername()

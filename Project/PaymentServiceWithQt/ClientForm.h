@@ -9,7 +9,6 @@
 #include "constants.h"
 #include "util.h"
 
-#include "ui_AccountCreatorDialog.h"
 #include "AccountCreatorDialog.h"
 
 
@@ -18,10 +17,13 @@ class ClientForm : public QDialog
 	Q_OBJECT
 
 public:
-	ClientForm(QWidget *parent = Q_NULLPTR, ClientController* clientController = nullptr);
+	ClientForm(QWidget *parent = Q_NULLPTR, std::shared_ptr<ClientController> clientController = nullptr);
 	~ClientForm();
 
-	ClientController* mClientController;
+	std::shared_ptr<ClientController> mClientController;
+	//ClientController* mClientController;
+
+	std::shared_ptr<AccountCreatorDialog> mAccountCreatorDialog;
 	
 private:
 	Ui::ClientForm ui;

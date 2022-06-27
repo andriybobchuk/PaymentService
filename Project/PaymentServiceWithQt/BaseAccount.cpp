@@ -72,7 +72,6 @@ std::vector<std::string> BaseAccount::toString() {
 
 bool BaseAccount::send(BaseAccount& beneficiary, double amount) {
 
-    ////if(exists(getCurrentDebitAccount()[0]))
     if (BaseAccount::getAmount() >= amount) {
 
         if (beneficiary.getCurrency() == getCurrency()) {

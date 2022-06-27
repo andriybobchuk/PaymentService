@@ -6,6 +6,9 @@
 #include <string>
 #include <map>
 
+// Switch to false when on release
+static const bool DEBUG_MODE = true;
+
  // Database serialization file
 static const std::string DATABASE_FILE_PATH = "E:/Documents/cpp_projects/polsl-aei-cp4-ang/2d98c560-gr12-repo/Project/PaymentServiceWithQt/database.txt";
 static const std::string DATABASE_FILE = "database.txt";
@@ -20,9 +23,9 @@ static const std::string SUSPENDED = "suspended";
 // Currency exchange rate table (Relative to USD) 
 static std::map<std::string, double> RATES = {
 	{"USD", 1},
-	{"PLN", 0.5},
-	{"EUR", 1.1},
-	{"UAH", 0.4}
+	{"PLN", 0.2249},
+	{"EUR", 1.0552},
+	{"UAH", 0.0339}
 };
 
 // Standard loan/deposit rates in my bank (Per day)

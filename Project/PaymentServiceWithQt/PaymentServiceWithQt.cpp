@@ -18,6 +18,11 @@ PaymentServiceWithQt::PaymentServiceWithQt(QWidget *parent)
 
 }
 
+PaymentServiceWithQt::~PaymentServiceWithQt() {
+    delete clientForm;
+    delete mEntryController;
+}
+
 void PaymentServiceWithQt::onClickSignUpClient() {
     QString username = ui.le_clientSignUpUsername->text();
     QString password = ui.le_clientSignUpPassword->text();

@@ -6,7 +6,6 @@
 class DebitAccount : public BaseAccount {
 
 public:
-
 	std::string getType();
 
 	DebitAccount(
@@ -15,7 +14,6 @@ public:
 		double amount,
 		std::string status,
 		std::string lastRecalculated
-		
 	);
 
 	friend std::ostream& operator<<(std::ostream& os, DebitAccount& debitAccount);

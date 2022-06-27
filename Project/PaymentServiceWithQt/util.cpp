@@ -3,51 +3,49 @@
 //
 
 #include "util.h"
+#include "constants.h"
 
 
 
 
 bool isPasswordSecure(std::string password) {
 
-
-    //todo: Remove on release
-    return true;
-
+    if (DEBUG_MODE) {
+        return true;
+    }
 
     std::regex validPasswordPattern(
         R"(^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[^ a-zA-Z0-9]).{8,}$)"
     );
 
-    if (!std::regex_match(password, validPasswordPattern)) {
-        return false;
-    }
-    else {
+    if (std::regex_match(password, validPasswordPattern)) {
         return true;
     }
+    return false;
 }
 
 bool isEmailValid(std::string email) {
 
-    std::regex validEmailPattern("([a-zA-Z0-9.]+@[a-zA-Z]+\\.[a-zA-Z.]{2,})");
-
-    if (!std::regex_match(email, validEmailPattern)) {
-        return false;
-    }
-    else {
+    if (DEBUG_MODE) {
         return true;
     }
+
+    std::regex validEmailPattern("([a-zA-Z0-9.]+@[a-zA-Z]+\\.[a-zA-Z.]{2,})");
+
+    if (std::regex_match(email, validEmailPattern)) {
+        return true;
+    }
+    return false;
 }
 
 bool isTransferAmountValid(std::string amount) {
 
-    std::regex validAmountPattern("^[+]?\\d+([.]\\d+)?$");
+    std::regex validAmountPattern("^[+]?[1-9]+\\d*([.]\\d+)?$");
 
-    if (!std::regex_match(amount, validAmountPattern)) {
-        return false;
-    }
-    else {
+    if (std::regex_match(amount, validAmountPattern)) {
         return true;
     }
+    return false;
 }
 
 bool createDatabaseBackup() {
@@ -258,3 +256,4 @@ std::string getCurrentDateAndTime() {
     return currentDateString;
 }
    
+

@@ -14,17 +14,15 @@ class ClientController
 private:
 	std::shared_ptr<BaseAccount> mCurrentAccount;
 	Client* mCurrentClient;
-	DebitAccount* mCurrentDebitAccount;
 
 public:
 	ClientController(Client* currentClient);
 
+	~ClientController();
 
 	std::vector <std::shared_ptr<BaseAccount>> getAllBaseAccounts();
 	std::vector <std::vector<std::string>> getMyBaseAccounts();
 	std::vector <std::vector<std::string>> getAllAccounts();
-
-
 
 	void setCurrentAccount(std::string uid);
 
@@ -44,13 +42,11 @@ public:
 
 	bool recalculationSuccessful();
 
-	//pb_suspend
 	bool exists(int id);
+
 	bool suspendAccount();
 
-
 	bool sendMoney(int recipientAccountUid, double amount);
-
 
 	std::string getCurrentUserEmail();
 

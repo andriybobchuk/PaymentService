@@ -19,11 +19,9 @@ bool deserialize() {
     bufferStringStream << inputFileStream.rdbuf();
     std::string fileAsString = bufferStringStream.str();
 
-    //return false;
 
     try {
         nlohmann::json j = nlohmann::json::parse(fileAsString);
-        //return false;
 
         nlohmann::json::iterator c = j.find("debitAccounts");
         if (c.key() == "debitAccounts") {
@@ -97,7 +95,6 @@ bool deserialize() {
                 PaymentService::getInstance()->addReservedEmail(j["reservedEmails"][i].get<std::string>());
             }
         }
-        //return 0;
 
     }
     catch (const std::exception& e) {

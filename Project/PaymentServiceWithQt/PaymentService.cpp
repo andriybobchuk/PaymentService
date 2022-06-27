@@ -11,6 +11,10 @@ PaymentService* PaymentService::getInstance() {
     return instance;
 }
 
+PaymentService::~PaymentService() {
+    delete instance;
+}
+
 void PaymentService::setInstance(PaymentService* instance) {
     PaymentService::instance = instance;
 }
@@ -110,9 +114,16 @@ void PaymentService::updateAccount(std::shared_ptr<BaseAccount> newAccount) {
             }
         }
     }
+}
 
+void PaymentService::updateClient(Client* newClient) {
 
-
+    for (auto& oldClient : getClients()) {
+        if (oldClient.getEmail() == newClient->getEmail()) {
+            oldClient.setDebitAccounts(newClient->getDebitAccounts());
+            oldClient.setCreditAccounts(newClient->getCreditAccounts());
+        }
+    }
 }
 
 std::ostream& operator<<(std::ostream& os, PaymentService* paymentService) {

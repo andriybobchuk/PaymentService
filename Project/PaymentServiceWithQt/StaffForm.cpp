@@ -1,7 +1,7 @@
 #include "StaffForm.h"
 
 
-StaffForm::StaffForm(QWidget *parent, StaffController* staffController) :
+StaffForm::StaffForm(QWidget *parent, std::shared_ptr<StaffController> staffController) :
     QDialog(parent), mStaffController(staffController) {
 
 	ui.setupUi(this);
@@ -19,8 +19,7 @@ StaffForm::StaffForm(QWidget *parent, StaffController* staffController) :
 	setupSettingsTab();
 }
 
-StaffForm::~StaffForm()
-{
+StaffForm::~StaffForm() {
 }
 
 void StaffForm::setupUsersActionButton(int id) {
@@ -158,7 +157,7 @@ void StaffForm::setupSettingsTab() {
 
 void StaffForm::logOut() {
 
-	pushToDatabase(); // Save chnages to the database file
+	pushToDatabase(); // Save changes to the database file
 
 	// Switch windows
 	parentWidget()->show();

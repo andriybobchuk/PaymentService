@@ -33,19 +33,17 @@ public:
 	/* Static access method. */
 	static PaymentService* getInstance();
 
+	~PaymentService();
+
 	void addReservedEmail(std::string reservedEmail);
 
 	void removeReservedEmail(std::string reservedEmail);
 
 	void setReservedEmails(const std::vector<std::string>& mReservedEmails);
 
-
-
 	std::vector<std::string>& getReservedEmails();
 
 	std::vector<std::string> getRegisteredEmails();
-
-
 
 	void addDebitAccount(DebitAccount debitAccount);
 
@@ -75,8 +73,9 @@ public:
 
 	friend std::ostream& operator<<(std::ostream& os, PaymentService* paymentService);
 
-
 	void updateAccount(std::shared_ptr<BaseAccount> newAccount);
+
+	void updateClient(Client* newCLient);
 
 };
 

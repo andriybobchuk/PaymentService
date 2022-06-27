@@ -4,7 +4,7 @@
 #include "ui_AccountCreatorDialog.h"
 #include "util.h"
 #include "ClientController.h"
-#include "ClientForm.h"
+//#include "ClientForm.h"
 #include "constants.h"
 
 class AccountCreatorDialog : public QDialog
@@ -13,11 +13,11 @@ class AccountCreatorDialog : public QDialog
 
 public:
 	AccountCreatorDialog(QWidget *parent = Q_NULLPTR, 
-		ClientController* clientController = nullptr
+		std::shared_ptr<ClientController> clientController = nullptr
 	);
 	~AccountCreatorDialog();
 
-	ClientController* mClientController;
+	std::shared_ptr<ClientController> mClientController;
 
 
 private:
@@ -26,5 +26,10 @@ private:
 private slots:
 
 	void onClickCreateAccount();
+
+
+signals:
+	void refreshParentUi();
+
 
 };

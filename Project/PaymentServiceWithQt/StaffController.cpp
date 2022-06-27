@@ -4,6 +4,10 @@
 
 StaffController::StaffController(Staff* currentStaff) : mCurrentStaff(currentStaff) {}
 
+StaffController::~StaffController() {
+	delete mCurrentStaff;
+}
+
 
 
 /* =========================================================================================================== *

@@ -2,10 +2,13 @@
 
 
 
-AccountCreatorDialog::AccountCreatorDialog(QWidget *parent, ClientController* clientController)
+AccountCreatorDialog::AccountCreatorDialog(QWidget *parent, std::shared_ptr<ClientController> clientController)
 	: QDialog(parent), mClientController(clientController)
 {
 	ui.setupUi(this);
+
+	connect(this, SIGNAL(refreshParentUi()), parent, SLOT(setupAccountTable()));
+
 
 	QStringList list = (QStringList() 
 		<< QString::fromStdString(DEBIT_ACCOUNT) 
@@ -50,7 +53,7 @@ void AccountCreatorDialog::onClickCreateAccount() {
 			ui.l_message->setText("Sent for approval");
 			parentWidget()->show();
 			
-			//mClientForm->setupAccountTable();
+			emit refreshParentUi();
 
 			close();
 		}
