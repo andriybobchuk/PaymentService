@@ -12,28 +12,24 @@ void count1m(int id) {
     while (!ready) {  // wait until main() sets ready...
         std::this_thread::yield();
     }
-    for (int i=0; i<1000000; ++i) {}
+    for (int i=0; i<1000000; ++i) {
+        std::cout<< i<< ' ';
+    }
     std::cout << id << ' ';
 }
 
 // For task 4:
 std::mutex vectLock;
 std::vector<unsigned int> primeVec;
+
 void findPrimes(unsigned int start, unsigned int end) {
-    for (unsigned int x = start; x <= end; x++) {
-        if (x == 2) {
-            vectLock.lock();
-            primeVec.push_back(x);
-            vectLock.unlock();
-        }
+    for (unsigned int x = start; x <= end; x += 2) {
         for (unsigned int y = 2; y < x; y++) {
             if ((x % y) == 0) {
                 break;
-            }
-            else if ((y + 1) == x) {
-                vectLock.lock();
+            } else if ((y + 1) == x) {
+                std::lock_guard<std::mutex> lock(vectLock);
                 primeVec.push_back(x);
-                vectLock.unlock();
             }
         }
     }
@@ -100,20 +96,19 @@ int main() {
     // (e.g. 1-100000). Do it such that you can specify the number of threads you want to use,
     // measure time, and compare it.
     int startTime = clock();
-    findPrimesWithThreads(1, 10000, 1);
+    // findPrimesWithThreads(1, 1000000, 1);
     int endTime = clock();
 
-    //for (auto &n : primeVec) std::cout << n << std::endl;
+    // for (auto &n : primeVec) std::cout << n << std::endl;
     std::cout << "Execution time (one thread): "
               << (endTime - startTime) / double(CLOCKS_PER_SEC) << std::endl;
 
     primeVec.clear();
     startTime = clock();
-    findPrimesWithThreads(1, 10000, 3);
+    findPrimesWithThreads(1, 1000000, 7);
     endTime = clock();
 
     std::cout << "Execution time (more threads): "
               << (endTime - startTime) / double(CLOCKS_PER_SEC) << std::endl;
-
 }
 

@@ -65,7 +65,7 @@ bool EntryController::signInClient(std::string login, std::string password) {
 
             clients.begin(),
             clients.end(),
-            [login, password](Client& client) {
+            [&](Client& client) {
                 return (
                     login == client.getEmail()
                     && comparePasswordToHash(password, client.getPassword())
